@@ -10,7 +10,7 @@ export const homeContentFixture: Omit<HomeContent, 'featured'> = {
       mobileTitle: 'Seja dono da\ncultura digital',
       description:
         'Descubra NFTs selecionados de criadores emergentes e consagrados. Colecione arte digital rara, apoie artistas e tenha uma parte da cultura da internet.',
-      mobileDescription: 'Descubra NFTs selecionados de criadores do mundo todo.',
+      mobileDescription: 'NFTs selecionados de criadores do mundo todo.',
       cta: 'Explorar',
       imageKey: 'emerald',
     },

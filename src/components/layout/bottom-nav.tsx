@@ -20,17 +20,30 @@ export function BottomNav() {
       className="fixed inset-x-0 bottom-0 z-40 md:hidden"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
-      <div className="relative mx-auto h-[94px] max-w-[480px]">
-        <div className="bg-bg-elevated absolute inset-x-0 bottom-0 h-[94px] rounded-t-[40px] shadow-[0_-8px_24px_rgba(0,0,0,0.35)]" />
+      <div className="relative mx-auto h-[95px] max-w-[480px]">
+        <div
+          className="absolute inset-x-0 bottom-0 flex h-[95px] [filter:drop-shadow(0_-10px_15px_rgba(10,6,4,0.45))]"
+          aria-hidden="true"
+        >
+          <div className="bg-bg-elevated flex-1 rounded-tl-[29px]" />
+          <svg className="fill-bg-elevated h-[95px] w-[176px] shrink-0" viewBox="119 40 176 95">
+            <path d="M282.85 40C269.09 40 256.87 48.2 251.02 60.65C243.26 77.17 226.46 88.62 207 88.62C187.54 88.62 170.74 77.18 162.98 60.65C157.13 48.2 144.9 40 131.15 40H28.93C12.95 40 0 52.95 0 68.93V134.95H414V68.93C414 52.95 401.05 40 385.07 40H282.85Z" />
+          </svg>
+          <div className="bg-bg-elevated flex-1 rounded-tr-[29px]" />
+        </div>
         <Link
-          to="/"
-          hash="catalogo"
-          aria-label="Explorar catálogo"
-          className="bg-brand-strong/35 text-fg absolute top-[-31px] left-1/2 flex size-[65px] -translate-x-1/2 items-center justify-center rounded-full backdrop-blur"
+          to="/perfil"
+          onClick={(event) => {
+            if (stored) return
+            event.preventDefault()
+            void navigate({ to: '/login', search: { redirect: '/perfil' } })
+          }}
+          aria-label="Minha conta"
+          className="bg-brand-strong/85 text-fg absolute top-[-30px] left-1/2 z-10 flex size-[65px] -translate-x-1/2 items-center justify-center rounded-full"
         >
           <ScanIcon className="size-7" />
         </Link>
-        <div className="absolute inset-x-0 bottom-0 flex h-[94px] items-center justify-between px-6">
+        <div className="absolute inset-x-0 bottom-0 flex h-[95px] items-center justify-between px-6">
           <Link
             to="/"
             className={cn(itemClass, is('/') && activeClass)}

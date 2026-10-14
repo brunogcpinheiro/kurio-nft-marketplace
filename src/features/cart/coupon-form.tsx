@@ -114,7 +114,9 @@ export function CouponForm({ couponCode, status, variant }: Props) {
           disabled={pending}
           className={cn(
             'shrink-0 text-[15px] font-bold disabled:opacity-60',
-            variant === 'desktop' ? 'bg-brand-strong text-bg w-[102px]' : 'text-fg w-[97px]',
+            variant === 'desktop'
+              ? 'bg-brand-strong text-bg w-[102px]'
+              : 'text-fg w-[97px] rounded-full bg-linear-to-r from-[#8b5a34] to-[#c98449]',
           )}
         >
           {apply.isPending ? '…' : 'Aplicar'}

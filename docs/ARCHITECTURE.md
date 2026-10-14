@@ -156,7 +156,7 @@ As fixtures são geradas por `scripts/generate-fixtures.mjs` com seed fixa: 60 N
 - No mobile o pagamento é dividido em duas etapas (`?step=collector` e `?step=wallet`) para caber na tela, com o passo na URL para o botão voltar funcionar.
 - O recibo é um diálogo no desktop e uma página no mobile. Fechar o diálogo mantém o recibo acessível na própria página.
 - Áreas do layout que não fazem parte da entrega (links de rodapé, login social, newsletter, compartilhamento, menu "Criadores") não fingem que funcionam: ao serem acionadas mostram o toast informativo "Indisponível nesta versão", dizendo que aquela área não faz parte desta entrega. O menu "Aprenda" leva à seção "Diário da Cunhagem" da home.
-- O ícone do carrinho no cabeçalho e na navegação inferior, sem sessão, abre o login (diálogo no desktop) com retorno ao carrinho. A página do carrinho continua aceitando visitantes com itens, que são fundidos à conta no login, e um visitante sem nada vê o estado vazio.
+- O botão central da barra inferior do mobile leva à conta do usuário. O ícone do carrinho no cabeçalho e na navegação inferior, sem sessão, abre o login (diálogo no desktop) com retorno à tela pedida; o botão central faz o mesmo com retorno ao perfil. A página do carrinho continua aceitando visitantes com itens, que são fundidos à conta no login, e um visitante sem nada vê o estado vazio.
 - O painel de simulação abre só pelo atalho `Ctrl+.` (ou pelos parâmetros `?scenario=` e `?reset=1` na URL), sem link visível, porque é ferramenta de demonstração e o Figma não prevê esse elemento. O código do painel é carregado sob demanda.
 
 ## Desvios do Figma
@@ -218,8 +218,15 @@ No Figma o selo tem 8 px de padding à esquerda e nenhum à direita (frame `Supp
 - Lupa da galeria a 13 px do topo e 12 px da direita da moldura, como no frame `Main Image`; eu estava usando 16 px nos dois eixos.
 - O botão de fechar da imagem ampliada ficava invisível sobre artes claras. Passou a usar o mesmo círculo escuro com borda da lupa.
 - Os ícones de redes sociais são SVGs exportados com a caixa de 30 px e a borda inclusas; renderizados a 16 px, o glifo ficava com 8 px. Agora o SVG ocupa os 30 px e a borda vem dele, como no Figma.
-- O selo "RARO" nos cards foi removido: não existe no Figma.
 - O link "Simulação" do rodapé foi removido; o painel abre pelo atalho `Ctrl+.`.
+
+### Barra inferior do mobile
+
+O botão central da barra, com o ícone de leitura, leva à conta do usuário (login antes, se não houver sessão). A barra reproduz o path do Figma: recorte semicircular de 48,6 px de raio centrado na borda superior, cantos de 29 px e sombra projetada para cima. O trecho central com o recorte é um SVG de largura fixa e as laterais esticam, então a forma não deforma em larguras diferentes de 414 px. O círculo central usa o laranja da marca a 85%, fica centrado na borda da barra e deixa um anel de 16 px por onde o conteúdo aparece, como no protótipo.
+
+### Botão "Aplicar" do cupom no mobile
+
+No Figma o botão é uma pílula com gradiente horizontal de `#8b5a34` a `#c98449` e texto claro. Reproduzi o gradiente e o texto claro; o contraste do texto é maior no lado escuro do gradiente. No desktop o botão é sólido com texto escuro, como no protótipo dessa tela.
 
 ### Botões de quantidade
 

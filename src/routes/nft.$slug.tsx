@@ -29,6 +29,7 @@ import { QuantityStepper } from '@/features/nft/quantity-stepper'
 import { Rating } from '@/features/nft/rating'
 import { RelatedNfts } from '@/features/nft/related'
 import { shortHash } from '@/lib/format'
+import { desktopQuery, useMediaQuery } from '@/lib/use-media-query'
 
 export const Route = createFileRoute('/nft/$slug')({
   loader: async ({ context, params }) => {
@@ -123,6 +124,7 @@ function NftDetail({ nft }: { nft: Nft }) {
   const soldOut = !edition || edition.available === 0
   const addToCart = useAddToCart()
   const navigate = useNavigate()
+  const desktop = useMediaQuery(desktopQuery)
 
   function selectEdition(id: string) {
     setEditionId(id)
@@ -141,7 +143,7 @@ function NftDetail({ nft }: { nft: Nft }) {
   const network = networkLabels[nft.network]
 
   return (
-    <SiteLayout bottomNav={false}>
+    <SiteLayout bottomNav={false} footer={desktop}>
       <PageContainer className="pt-0 md:pt-8">
         <div className="hidden md:block">
           <nav aria-label="Trilha de navegação" className="text-fg text-[15px] leading-4 font-bold">
@@ -313,8 +315,8 @@ function NftDetail({ nft }: { nft: Nft }) {
         </div>
 
         <div className="md:hidden">
-          <div className="relative -mx-4 px-7 pt-6">
-            <div className="absolute inset-x-7 top-6 z-10 flex items-center justify-between">
+          <div className="-mx-4 px-7 pt-6">
+            <div className="flex items-center justify-between">
               <button
                 type="button"
                 onClick={() => window.history.back()}
@@ -325,20 +327,18 @@ function NftDetail({ nft }: { nft: Nft }) {
               </button>
               <FavoriteButton nft={nft} variant="icon" />
             </div>
-            <div className="bg-bg-elevated overflow-hidden rounded-3xl pt-11">
-              <img
-                src={`/nfts/${nft.imageKey}-640.webp`}
-                srcSet={`/nfts/${nft.imageKey}-640.webp 640w, /nfts/${nft.imageKey}-900.webp 900w`}
-                sizes="90vw"
-                alt={`Arte do NFT ${nft.name}`}
-                className="aspect-square w-full rounded-3xl object-cover"
-                fetchPriority="high"
-                width={361}
-                height={356}
-              />
-            </div>
+            <img
+              src={`/nfts/${nft.imageKey}-640.webp`}
+              srcSet={`/nfts/${nft.imageKey}-640.webp 640w, /nfts/${nft.imageKey}-900.webp 900w`}
+              sizes="90vw"
+              alt={`Arte do NFT ${nft.name}`}
+              className="mt-2 aspect-[361/356] w-full rounded-3xl object-cover"
+              fetchPriority="high"
+              width={361}
+              height={356}
+            />
           </div>
-          <div className="bg-bg-elevated relative z-10 -mx-4 -mt-28 flex flex-col gap-3 rounded-t-[31px] px-6 pt-8 pb-48">
+          <div className="bg-bg-elevated relative z-10 -mx-4 -mt-[30px] flex flex-col gap-3 rounded-t-[31px] px-6 pt-8 pb-44">
             <div className="flex items-center justify-between gap-3">
               <h1 className="text-fg text-xl leading-5 font-bold">{nft.name}</h1>
               <Rating average={nft.rating.average} count={nft.rating.count} compact />

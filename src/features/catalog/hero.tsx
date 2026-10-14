@@ -159,14 +159,14 @@ export function Hero({ slides }: { slides?: HomeContent['slides'] }) {
         />
       ) : null}
 
-      <div className="bg-surface relative h-[190px] overflow-hidden rounded-xl p-4 md:hidden">
+      <div className="bg-surface relative h-[190px] overflow-hidden rounded-[30px] p-4 md:hidden">
         <span
           aria-hidden="true"
-          className="bg-surface-strong/60 absolute -top-8 -left-20 size-[248px] rounded-full"
+          className="absolute -top-8 -left-20 size-[248px] rounded-full bg-[linear-gradient(160deg,rgba(221,154,95,0.43),rgba(210,138,76,0.04))]"
         />
         <span
           aria-hidden="true"
-          className="bg-surface-strong/40 absolute top-[-10px] left-[73px] size-[248px] rounded-full"
+          className="absolute top-[-10px] left-[73px] size-[248px] rounded-full bg-[linear-gradient(160deg,rgba(221,154,95,0.37),rgba(210,138,76,0))]"
         />
         <div className="relative flex h-full gap-2">
           <div className="flex w-[188px] flex-col justify-between">
