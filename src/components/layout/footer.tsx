@@ -11,6 +11,7 @@ import {
 import { OutOfScopeLink } from '@/components/out-of-scope-link'
 import { PageContainer } from '@/components/layout/page-container'
 import { notifyOutOfScope } from '@/lib/out-of-scope'
+import { SimulationPanel } from '@/features/simulation/panel'
 
 const highlights = [
   {
@@ -196,9 +197,12 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <p className="text-fg py-4 text-center text-sm leading-[30px]">
-          © 2026 Kurio. Propriedade digital para todos.
-        </p>
+        <div className="flex items-center justify-center gap-4 py-4">
+          <p className="text-fg text-center text-sm leading-[30px]">
+            © 2026 Kurio. Propriedade digital para todos.
+          </p>
+          <SimulationPanel />
+        </div>
       </PageContainer>
     </footer>
   )

@@ -130,8 +130,8 @@ const networkNames = { ethereum: 'Ethereum', polygon: 'Polygon', solana: 'Solana
 
 function editionsFor(price, index) {
   const base = Number(price)
-  const oneOfOne = index === 0 ? 0 : rand() < 0.35 ? 0 : 1
-  const tenAvailable = rand() < 0.12 ? 0 : int(1, 10)
+  const oneOfOne = index < 9 ? (index % 3 === 1 ? 0 : 1) : rand() < 0.35 ? 0 : 1
+  const tenAvailable = index === 1 ? 1 : index < 9 ? int(2, 10) : rand() < 0.12 ? 0 : int(1, 10)
   const fiftyAvailable = index < 9 ? int(12, 50) : rand() < 0.08 ? 0 : int(2, 50)
   return [
     { id: 'e1', label: '1/1', price: money(base * 4), available: oneOfOne, total: 1 },

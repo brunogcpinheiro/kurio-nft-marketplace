@@ -2,7 +2,7 @@ import type { Db } from './db'
 import nftsJson from './fixtures/nfts.json'
 import { userFixtures } from './fixtures/users'
 
-export const seedVersion = 2
+export const seedVersion = 3
 
 export function createSeed(): Db {
   return {

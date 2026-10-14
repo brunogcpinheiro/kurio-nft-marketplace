@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { cn } from 'cn'
 import { BottomNav } from './bottom-nav'
 import { Footer } from './footer'
 import { Header } from './header'
@@ -9,7 +10,7 @@ export function SiteLayout({ children, footer = true, bottomNav = true, header =
   return (
     <div className="flex min-h-dvh flex-col">
       {header ? <Header /> : null}
-      <main id="conteudo" className="flex-1">
+      <main id="conteudo" className={cn('flex-1', bottomNav && !footer && 'pb-28 md:pb-0')}>
         {children}
       </main>
       {footer ? <Footer /> : null}

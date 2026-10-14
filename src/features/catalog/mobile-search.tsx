@@ -6,11 +6,11 @@ type Props = { value?: string; onChange: (value: string | undefined) => void }
 export function MobileSearch({ value, onChange }: Props) {
   const [term, setTerm] = useState(value ?? '')
   const [seen, setSeen] = useState(value)
-  const [emitted, setEmitted] = useState(value)
+  const [emitted, setEmitted] = useState<string | undefined | null>(null)
 
   if (value !== seen) {
     setSeen(value)
-    if (value !== emitted) setTerm(value ?? '')
+    if (value !== emitted && (value ?? '') !== term.trim()) setTerm(value ?? '')
   }
 
   useEffect(() => {

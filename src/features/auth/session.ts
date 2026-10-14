@@ -1,3 +1,4 @@
+import { useSyncExternalStore } from 'react'
 import type { AuthResponse } from '@/api/schemas'
 import { createStoredValue, parseJson } from '@/lib/storage'
 
@@ -16,4 +17,10 @@ export function sessionFromAuth(auth: AuthResponse): StoredSession {
 export function cartOwnerKey() {
   const current = session.get()
   return current ? `user:${current.userId}` : 'guest'
+}
+
+const none = () => null
+
+export function useStoredSession() {
+  return useSyncExternalStore(session.subscribe, session.get, none)
 }

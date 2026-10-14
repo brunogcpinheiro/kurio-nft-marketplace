@@ -20,6 +20,7 @@ export const realtimeNotices = {
     const entry = { ...notice, id: crypto.randomUUID(), createdAt: Date.now() }
     notices = [entry, ...notices].slice(0, 5)
     emit()
+    setTimeout(() => realtimeNotices.dismiss(entry.id), 15000)
     return entry
   },
   dismiss(id: string) {

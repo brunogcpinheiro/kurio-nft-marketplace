@@ -1,3 +1,4 @@
+import { z } from 'zod'
 import { api } from './client'
 import {
   authResponseSchema,
@@ -7,9 +8,18 @@ import {
   nftSchema,
   relatedNftsSchema,
   sessionResponseSchema,
+  nftSummarySchema,
+  userSchema,
+  walletSchema,
+  walletsResponseSchema,
+  type AddCartItemInput,
   type CatalogQuery,
   type LoginInput,
+  type PasswordInput,
+  type ProfileInput,
   type RegisterInput,
+  type WalletInput,
+  type WalletSlot,
 } from './schemas'
 
 export const authApi = {
@@ -38,4 +48,35 @@ export const contentApi = {
 
 export const cartApi = {
   get: (signal?: AbortSignal) => api.get('/cart', { signal }).then((r) => cartSchema.parse(r.data)),
+  addItem: (input: AddCartItemInput) =>
+    api.post('/cart/items', input).then((r) => cartSchema.parse(r.data)),
+}
+
+export const favoritesApi = {
+  list: (signal?: AbortSignal) =>
+    api
+      .get('/favorites', { signal })
+      .then((r) =>
+        z.object({ nftIds: z.array(z.string()), items: z.array(nftSummarySchema) }).parse(r.data),
+      ),
+  add: (nftId: string) => api.put(`/favorites/${nftId}`).then(() => undefined),
+  remove: (nftId: string) => api.delete(`/favorites/${nftId}`).then(() => undefined),
+}
+
+export const profileApi = {
+  get: (signal?: AbortSignal) =>
+    api.get('/profile', { signal }).then((r) => userSchema.parse(r.data)),
+  update: (input: ProfileInput) =>
+    api.patch('/profile', input).then((r) => userSchema.parse(r.data)),
+  updateAvatar: (dataUrl: string | null) =>
+    api.patch('/profile/avatar', { dataUrl }).then((r) => userSchema.parse(r.data)),
+  changePassword: (input: PasswordInput) =>
+    api.post('/profile/password', input).then(() => undefined),
+}
+
+export const walletsApi = {
+  list: (signal?: AbortSignal) =>
+    api.get('/wallets', { signal }).then((r) => walletsResponseSchema.parse(r.data)),
+  save: (slot: WalletSlot, input: WalletInput) =>
+    api.put(`/wallets/${slot}`, input).then((r) => walletSchema.parse(r.data)),
 }
