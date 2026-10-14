@@ -166,6 +166,58 @@ As fixtures são geradas por `scripts/generate-fixtures.mjs` com seed fixa: 60 N
 - Os estados que o Figma não desenha (skeleton, vazio, erro, banner de evento, diálogo de cotação desatualizada, pedido pendente e recusado) seguem os tokens e componentes do próprio design.
 - Mensagens e rótulos em português; o protótipo mistura idiomas.
 
+## Revisão final de interface
+
+Depois de fechar os fluxos, revisei as telas contra o Figma usando capturas da própria aplicação. Os pontos abaixo são desvios conscientes do protótipo ou casos em que o protótipo é inconsistente e eu mantive a versão coerente. As capturas estão em `docs/ux-improves/`.
+
+### Hero: respiro simétrico e posição dos indicadores
+
+![Hero com padding só à esquerda e indicadores dentro da coluna de texto](ux-improves/padding-hero-and-dots.png)
+
+No Figma o hero tem 40 px de padding só à esquerda (frame `Hero`, padding `0 0 0 40`) e a imagem encosta na borda direita do container. Os três indicadores ficam dentro da coluna de texto, alinhados à direita. Passei a usar 40 px dos dois lados e movi os indicadores para baixo do bloco, centralizados. O motivo é o carrossel que esse hero vai receber: com padding de um lado só, na transição entre slides o texto do próximo encostaria na imagem do anterior, e indicadores dentro da coluna de texto se deslocariam junto com o conteúdo.
+
+### Cards do catálogo: altura da moldura e respiro da imagem
+
+![Cards com paddings verticais maiores que os laterais](ux-improves/img-height-and-cards.png)
+
+No Figma os cards de 258×300 posicionam a arte de 250×250 em alturas diferentes (24, 25 e 31 px do topo, dependendo do card) e o card "Cosmic Bloom #118" usa uma arte de 224×286, diferente das demais. Mantive uma única moldura de 258×300 para todos, o que corrige as alturas desiguais. A arte, antes quadrada e centralizada (4 px nas laterais e 25 px em cima e embaixo), agora preenche a moldura com 4 px em todos os lados, com corte por `object-cover`. No mobile vale a mesma regra dentro da moldura de 175×200.
+
+### Banner de destaque: títulos centralizados
+
+![Títulos do banner desalinhados](ux-improves/text-alignment.png)
+
+No protótipo "NFT em destaque" fica alinhado à esquerda e "Oferta limitada" recuado 20 px, sem relação com a imagem abaixo. Centralizei as duas linhas em relação ao banner.
+
+### Faixa de preço: trilha fora do intervalo
+
+![Slider com trilha e intervalo na mesma cor](ux-improves/slider-color.png)
+
+No Figma a trilha inteira e o intervalo selecionado usam o mesmo laranja, então não dá para ver onde o intervalo começa e termina. A parte fora do intervalo usa agora o marrom `surface-strong`, e só o trecho selecionado fica laranja.
+
+### Promoções: bloco de texto centralizado
+
+![Texto das promoções alinhado ao topo com espaço vazio abaixo](ux-improves/text-alignment-vertically-and-horizontally.png)
+
+O bloco de texto ficava alinhado ao topo do card, deixando um vazio abaixo do botão, e o botão não acompanhava a margem do texto. Agora título, descrição e botão ficam centralizados na vertical e compartilham a mesma margem direita de 30 px.
+
+### Rodapé: colunas alinhadas entre os blocos
+
+![Colunas do rodapé desencontradas](ux-improves/columns-alignment.png)
+
+O Figma usa três grades diferentes nos três blocos do rodapé (colunas de 264 px com 16 px de recuo interno, quatro colunas iguais com 92 px de intervalo, e colunas de 178 px com 124 px de intervalo). Eu tinha seguido cada uma ao pé da letra, e por isso os títulos não se alinhavam na vertical. Os três blocos usam agora a mesma grade de 264/264/264/restante, com o mesmo recuo por coluna.
+
+### Selo de carteiras compatíveis
+
+![Selo de carteiras com padding igual nos dois lados](ux-improves/wallets-info-alignment.png)
+
+No Figma o selo tem 8 px de padding à esquerda e nenhum à direita (frame `Supported wallet brands`, padding `8 0 8 8`), com o texto encostando na borda. Mantive 10 px dos dois lados.
+
+### Botões de quantidade
+
+![Botões de quantidade circulares](ux-improves/buttons-circles.png)
+
+No carrinho desktop do Figma os botões de mais e menos são elipses de 20×30 com raio 20, enquanto no carrinho mobile são círculos de 24 px. Uso círculos nos dois casos (20 px no carrinho, 30 px no detalhe), com o sinal centralizado.
+
 ## Limitações conhecidas
 
 - O MSW está fixado em 2.15 porque o binding de Socket.IO usado (`@mswjs/socket.io-binding`) não suporta a versão 3. O binding cobre apenas transporte WebSocket, então o cliente é configurado sem fallback de polling, e o servidor simulado envia ping a cada 20 s para o engine.io não derrubar a conexão.

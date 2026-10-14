@@ -134,7 +134,7 @@ function PriceRangeForm({ min, max, initial, onApply }: PriceRangeProps) {
         onValueChange={(value) => setRange([value[0] ?? min, value[1] ?? max])}
         minStepsBetweenThumbs={1}
         aria-label="Faixa de preço em ETH"
-        className="[&_[data-slot=slider-range]]:bg-brand-strong [&_[data-slot=slider-thumb]]:border-bg [&_[data-slot=slider-thumb]]:bg-brand-strong [&_[data-slot=slider-track]]:bg-brand-strong py-1 [&_[data-slot=slider-thumb]]:size-[15px] [&_[data-slot=slider-thumb]]:border-[3px] [&_[data-slot=slider-track]]:h-1"
+        className="[&_[data-slot=slider-range]]:bg-brand-strong [&_[data-slot=slider-thumb]]:border-bg [&_[data-slot=slider-thumb]]:bg-brand-strong [&_[data-slot=slider-track]]:bg-surface-strong py-1 [&_[data-slot=slider-thumb]]:size-[15px] [&_[data-slot=slider-thumb]]:border-[3px] [&_[data-slot=slider-track]]:h-1"
       />
       <p className="text-fg text-[15px] leading-5" aria-live="polite">
         Preço: {formatRange(range[0])} - {formatRange(range[1])} ETH

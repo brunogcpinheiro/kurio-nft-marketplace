@@ -44,7 +44,7 @@ export function NftCard({
             base={320}
             priority={priority}
             sizes="(min-width: 1280px) 250px, (min-width: 768px) 30vw, 45vw"
-            className="h-[168px] w-[168px] rounded-2xl object-cover md:h-[250px] md:w-[250px] md:rounded-[15px]"
+            className="size-full rounded-2xl object-cover md:rounded-[15px]"
           />
         </Link>
         {nft.rare ? (

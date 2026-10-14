@@ -20,9 +20,9 @@ export function FeaturedBanner({ nft }: { nft?: NftSummary }) {
       className="flex flex-col gap-4 pt-6"
       aria-label={`NFT em destaque: ${nft.name}`}
     >
-      <div className="flex flex-col gap-4 px-5">
+      <div className="flex flex-col gap-4 px-5 text-center">
         <p className="text-brand text-2xl leading-8 font-bold uppercase">NFT em destaque</p>
-        <p className="text-fg pl-5 text-[22px] leading-4 font-bold uppercase">Oferta limitada</p>
+        <p className="text-fg text-[22px] leading-4 font-bold uppercase">Oferta limitada</p>
       </div>
       <NftImage
         imageKey={nft.imageKey}

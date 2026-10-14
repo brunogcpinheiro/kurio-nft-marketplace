@@ -51,17 +51,19 @@ const collections = [
 ]
 
 const linkClass = 'text-fg text-sm leading-[30px] hover:text-brand'
+const columns = 'grid gap-8 md:grid-cols-2 xl:grid-cols-[264px_264px_264px_1fr] xl:gap-0'
+const column = (index: number) => (index > 0 ? 'xl:pl-4' : '')
 
 export function Footer() {
   const [email, setEmail] = useState('')
   return (
     <footer className="mt-16 pb-28 md:mt-24 md:pb-0">
       <PageContainer>
-        <div className="bg-bg-elevated grid gap-8 p-6 md:grid-cols-2 md:p-8 xl:grid-cols-[264px_264px_264px_1fr] xl:gap-0">
+        <div className={`bg-bg-elevated p-6 md:p-8 ${columns}`}>
           {highlights.map((item, index) => (
             <div
               key={item.title}
-              className={`flex flex-col gap-3 xl:px-4 ${index > 0 ? 'xl:border-brand-strong xl:border-l' : ''}`}
+              className={`flex flex-col gap-3 xl:pr-4 ${column(index)} ${index > 0 ? 'xl:border-brand-strong xl:border-l' : ''}`}
             >
               <span
                 aria-hidden="true"
@@ -74,7 +76,7 @@ export function Footer() {
             </div>
           ))}
           <form
-            className="xl:border-brand-strong flex flex-col gap-3 xl:border-l xl:pl-4"
+            className={`xl:border-brand-strong flex flex-col gap-3 xl:border-l ${column(3)}`}
             onSubmit={(event) => {
               event.preventDefault()
               notifyOutOfScope('A newsletter')
@@ -102,22 +104,25 @@ export function Footer() {
           </form>
         </div>
 
-        <div className="bg-surface-strong grid gap-3 px-6 py-6 md:px-8 xl:grid-cols-4 xl:gap-[92px]">
+        <div className={`bg-surface-strong px-6 py-6 md:px-8 ${columns}`}>
           <span className="text-fg text-sm font-bold tracking-[1.4px]">KURIO</span>
-          <p className="text-fg text-sm leading-[22px]">
+          <p className={`text-fg text-sm leading-[22px] ${column(1)}`}>
             Feito para colecionadores,
             <br />
             criadores e cultura
           </p>
-          <a href="mailto:contato@email.com" className="text-fg text-sm leading-[22px]">
+          <a
+            href="mailto:contato@email.com"
+            className={`text-fg text-sm leading-[22px] ${column(2)}`}
+          >
             contato@email.com
           </a>
-          <a href="tel:+551140028922" className="text-fg text-sm leading-[22px]">
+          <a href="tel:+551140028922" className={`text-fg text-sm leading-[22px] ${column(3)}`}>
             +55 11 4002 8922
           </a>
         </div>
 
-        <div className="bg-bg-elevated mt-1.5 grid gap-8 p-6 md:grid-cols-2 md:p-8 xl:grid-cols-[178px_178px_178px_1fr] xl:gap-[124px]">
+        <div className={`bg-bg-elevated mt-1.5 p-6 md:p-8 ${columns}`}>
           <div>
             <h3 className="text-fg text-lg leading-4 font-bold">Meu perfil</h3>
             <ul className="mt-2 flex flex-col">
@@ -142,7 +147,7 @@ export function Footer() {
               </li>
             </ul>
           </div>
-          <div>
+          <div className={column(1)}>
             <h3 className="text-fg text-lg leading-4 font-bold">Central de ajuda</h3>
             <ul className="mt-2 flex flex-col">
               {[
@@ -158,7 +163,7 @@ export function Footer() {
               ))}
             </ul>
           </div>
-          <div>
+          <div className={column(2)}>
             <h3 className="text-fg text-lg leading-4 font-bold">Coleções</h3>
             <ul className="mt-2 flex flex-col">
               {collections.map((item) => (
@@ -175,7 +180,7 @@ export function Footer() {
               ))}
             </ul>
           </div>
-          <div className="flex flex-col gap-8">
+          <div className={`flex flex-col gap-8 ${column(3)}`}>
             <div>
               <h3 className="text-fg text-lg leading-4 font-bold">Redes sociais</h3>
               <ul className="mt-5 flex gap-2.5">

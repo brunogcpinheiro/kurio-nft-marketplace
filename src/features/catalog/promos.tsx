@@ -40,7 +40,7 @@ export function Promos({ promos }: { promos?: HomeContent['promos'] }) {
             width={292}
             height={250}
           />
-          <div className="relative flex flex-1 flex-col items-end justify-start px-4 py-7 text-right md:px-[30px]">
+          <div className="relative flex flex-1 flex-col items-end justify-center px-4 py-7 text-right md:px-[30px]">
             <h3 className="text-fg text-base leading-6 font-bold whitespace-pre-line md:text-lg">
               {promo.title}
             </h3>

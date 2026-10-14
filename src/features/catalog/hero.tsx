@@ -10,7 +10,7 @@ export function Hero({ content }: { content?: HomeContent['hero'] }) {
   const imageKey = content?.imageKey ?? heroImage
   return (
     <section aria-labelledby="hero-title" aria-busy={!content} className="mt-4 md:mt-8">
-      <div className="hidden h-[450px] grid-cols-[1fr_450px] gap-[110px] pl-10 md:grid">
+      <div className="hidden h-[450px] grid-cols-[1fr_450px] gap-[110px] px-10 md:grid">
         <div className="flex flex-col justify-between py-[43px]">
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-2">
@@ -50,11 +50,6 @@ export function Hero({ content }: { content?: HomeContent['hero'] }) {
               <Skeleton className="h-10 w-[140px]" />
             )}
           </div>
-          <div className="flex justify-end gap-2" aria-hidden="true">
-            <span className="bg-brand-strong size-2 rounded-full" />
-            <span className="bg-brand-strong size-2 rounded-full" />
-            <span className="bg-brand-strong size-2 rounded-full" />
-          </div>
         </div>
         <NftImage
           imageKey={imageKey}
@@ -66,6 +61,11 @@ export function Hero({ content }: { content?: HomeContent['hero'] }) {
           width={450}
           height={450}
         />
+      </div>
+      <div className="mt-6 hidden justify-center gap-2 md:flex" aria-hidden="true">
+        <span className="bg-brand-strong size-2 rounded-full" />
+        <span className="bg-brand-strong size-2 rounded-full" />
+        <span className="bg-brand-strong size-2 rounded-full" />
       </div>
 
       <div className="bg-surface relative h-[190px] overflow-hidden rounded-xl p-4 md:hidden">
