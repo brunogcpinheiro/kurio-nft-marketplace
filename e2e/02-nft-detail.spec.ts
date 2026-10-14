@@ -1,10 +1,7 @@
 import { expect, test } from './fixtures'
 
-test.describe('detalhe do nft', () => {
-  test('acesso direto renderiza o nft com edições e limite de quantidade', async ({
-    page,
-    mock,
-  }) => {
+test.describe('nft detail', () => {
+  test('direct access renders the nft with editions and quantity limit', async ({ page, mock }) => {
     await mock.goto('/nft/sage-nomad-009')
     await expect(
       page.getByRole('heading', { level: 1, name: 'Sage Nomad #009' }).first(),
@@ -28,14 +25,17 @@ test.describe('detalhe do nft', () => {
     await expect(page.locator('output').first()).toHaveText('2')
   })
 
-  test('nft inexistente mostra erro próprio com volta ao catálogo', async ({ page, mock }) => {
+  test('missing nft shows a dedicated error with a way back to the catalog', async ({
+    page,
+    mock,
+  }) => {
     await mock.goto('/nft/nao-existe')
     await expect(page.getByRole('status')).toContainText('NFT não encontrado')
     await page.getByRole('link', { name: 'Voltar ao catálogo' }).click()
     await expect(page).toHaveURL(/\/$/)
   })
 
-  test('comprar adiciona ao carrinho e navega', async ({ page, mock }) => {
+  test('buy adds to the cart and navigates', async ({ page, mock }) => {
     await mock.goto('/nft/emerald-ape-042')
     await page
       .getByRole('button', { name: /^Comprar/i })

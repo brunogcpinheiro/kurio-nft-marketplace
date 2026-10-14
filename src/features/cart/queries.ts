@@ -1,5 +1,5 @@
 import { queryOptions, useQuery } from '@tanstack/react-query'
-import { cartApi } from '@/api/endpoints'
+import { cartApi, quoteApi } from '@/api/endpoints'
 import { queryKeys } from '@/api/query-keys'
 import { useSyncExternalStore } from 'react'
 import { session } from '@/features/auth/session'
@@ -33,4 +33,23 @@ export function useCart() {
 export function useCartCount() {
   const { data } = useCart()
   return data?.items.reduce((sum, item) => sum + item.quantity, 0) ?? 0
+}
+
+export const quoteQueries = {
+  current: (ownerKey: string) =>
+    queryOptions({
+      queryKey: queryKeys.quote(ownerKey),
+      queryFn: ({ signal }) => quoteApi.current(signal),
+      staleTime: 0,
+      refetchOnWindowFocus: true,
+      refetchOnReconnect: true,
+    }),
+}
+
+export function useQuote(enabled = true) {
+  const ownerKey = useCartOwnerKey()
+  return useQuery({
+    ...quoteQueries.current(ownerKey),
+    enabled: enabled && ownerKey !== 'anonymous',
+  })
 }

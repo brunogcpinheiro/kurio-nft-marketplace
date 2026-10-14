@@ -1,7 +1,7 @@
 import { cards, closeFilters, expect, openFilters, search, test } from './fixtures'
 
-test.describe('catálogo', () => {
-  test('busca, filtros combinados, ordenação e paginação compõem a URL e sobrevivem ao histórico', async ({
+test.describe('catalog', () => {
+  test('search, combined filters, sorting and pagination live in the url and survive history navigation', async ({
     page,
     mock,
   }) => {
@@ -79,7 +79,7 @@ test.describe('catálogo', () => {
     await expect(page).toHaveURL(/page=2/)
   })
 
-  test('mudar de filtro reinicia a paginação', async ({ page, mock }) => {
+  test('changing a filter resets pagination', async ({ page, mock }) => {
     await mock.goto('/?page=3')
     await expect(page.getByRole('link', { name: 'Página 3' })).toHaveAttribute(
       'aria-current',
@@ -92,7 +92,7 @@ test.describe('catálogo', () => {
     await expect(page).not.toHaveURL(/page=/)
   })
 
-  test('resultado vazio oferece limpar filtros', async ({ page, mock }) => {
+  test('empty result offers to clear filters', async ({ page, mock }) => {
     await mock.goto('/?category=assinaturas&network=solana')
     await expect(page.getByRole('status')).toContainText('Nenhum NFT encontrado')
     await page.getByRole('button', { name: 'Limpar filtros' }).click()
@@ -100,9 +100,9 @@ test.describe('catálogo', () => {
     await expect(cards(page)).toHaveCount(9)
   })
 
-  test.describe('respostas fora de ordem', () => {
+  test.describe('out-of-order responses', () => {
     test.use({ scenario: 'out-of-order' })
-    test('a grade mostra a última busca mesmo quando a primeira resposta chega depois', async ({
+    test('grid shows the latest search even when the first response arrives last', async ({
       page,
       mock,
     }) => {

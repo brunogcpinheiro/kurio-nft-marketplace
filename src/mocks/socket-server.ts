@@ -5,6 +5,7 @@ import { applyNftChange } from './catalog-changes'
 import { getDb } from './db'
 import { findSession } from './http'
 import { getScenario } from './scenarios'
+import { settleDueOrders } from './handlers/orders'
 
 type Connection = {
   id: string
@@ -50,6 +51,7 @@ export const socketHandlers = [
             ? `guest:${auth.guest}`
             : null
         scheduleScenario(entry, timers)
+        settleDueOrders()
       }
     })
 

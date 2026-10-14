@@ -37,7 +37,7 @@ export function RelatedNfts({ slug, title }: Props) {
       </div>
       <ul
         ref={scroller}
-        className="-mx-4 flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto px-4 pb-2 md:mx-0 md:gap-7 md:px-0 [&::-webkit-scrollbar]:hidden"
+        className="relative -mx-4 flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto px-4 pb-2 md:mx-0 md:gap-7 md:px-0 [&::-webkit-scrollbar]:hidden"
         aria-label={title}
       >
         {query.isPending

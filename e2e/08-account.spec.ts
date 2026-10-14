@@ -1,7 +1,7 @@
 import { expect, test, tinyPng } from './fixtures'
 
-test.describe('perfil e carteiras', () => {
-  test('edição de perfil, senha e avatar com validações', async ({ page, mock }) => {
+test.describe('profile and wallets', () => {
+  test('profile, password and avatar edits with validation', async ({ page, mock }) => {
     await mock.goto('/')
     await mock.login('ana')
     await mock.goto('/perfil')
@@ -41,7 +41,7 @@ test.describe('perfil e carteiras', () => {
     await expect(page).toHaveURL(/\/$/)
   })
 
-  test('cadastro de carteira valida endereço e persiste', async ({ page, mock }) => {
+  test('wallet form validates the address and persists', async ({ page, mock }) => {
     await mock.goto('/')
     await mock.login('bruno')
     await mock.goto('/perfil/carteiras')

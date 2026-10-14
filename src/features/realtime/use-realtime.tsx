@@ -45,7 +45,6 @@ export function useRealtime() {
           if (!parsed.success || !accept(parsed.data.eventId)) return
           const event = parsed.data
           let name: string | null = null
-          let touched = false
 
           for (const query of queryClient
             .getQueryCache()
@@ -58,7 +57,6 @@ export function useRealtime() {
               const match = list.items.find((i) => i.id === event.nftId)
               if (match && !isNewerVersion(match, event)) continue
               name ??= match?.name ?? null
-              touched = true
               queryClient.setQueryData(query.queryKey, {
                 ...list,
                 items: list.items.map((i) => patchSummary(i, event)),
@@ -69,7 +67,6 @@ export function useRealtime() {
               const detail = data as NftSummary & { editions?: unknown }
               if (!isNewerVersion(detail, event)) continue
               name ??= detail.name
-              touched = true
               queryClient.setQueryData(query.queryKey, {
                 ...detail,
                 price: event.price,
@@ -77,6 +74,18 @@ export function useRealtime() {
                 version: event.version,
                 editions: event.editions,
               })
+            }
+          }
+
+          if (!name) {
+            for (const query of queryClient.getQueryCache().findAll({ queryKey: ['cart'] })) {
+              const data = query.state.data as
+                { items?: { nftId: string; nft: { name: string } }[] } | undefined
+              const match = data?.items?.find((item) => item.nftId === event.nftId)
+              if (match) {
+                name = match.nft.name
+                break
+              }
             }
           }
 
@@ -93,7 +102,7 @@ export function useRealtime() {
             message,
             nftId: event.nftId,
           })
-          if (touched || name) toast.info(message)
+          toast.info(message)
         }
 
         const onOrderUpdated = (raw: unknown) => {

@@ -40,6 +40,14 @@ export function AuthScreen({ mode, redirect }: Props) {
     if (isAuthenticated) void navigate({ to: safeRedirect(redirect), replace: true })
   }, [isAuthenticated, navigate, redirect])
 
+  function close() {
+    void navigate({ to: '/' }).then(() =>
+      requestAnimationFrame(() =>
+        document.querySelector<HTMLElement>('[data-login-link]')?.focus(),
+      ),
+    )
+  }
+
   const tabs = (
     <div className="flex items-center justify-center gap-2 text-xl leading-4 font-medium">
       <Link
@@ -83,7 +91,7 @@ export function AuthScreen({ mode, redirect }: Props) {
           update={() => undefined}
           reset={() => undefined}
         />
-        <Dialog open onOpenChange={(open) => !open && void navigate({ to: '/' })}>
+        <Dialog open onOpenChange={(open) => !open && close()}>
           <DialogContent
             showCloseButton={false}
             className={cn(
@@ -98,7 +106,7 @@ export function AuthScreen({ mode, redirect }: Props) {
           >
             <button
               type="button"
-              onClick={() => void navigate({ to: '/' })}
+              onClick={close}
               aria-label="Fechar"
               className="text-brand-strong absolute top-3 right-3 flex size-6 items-center justify-center"
             >

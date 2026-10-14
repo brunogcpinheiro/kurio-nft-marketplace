@@ -1,7 +1,11 @@
 import { expect, test, users } from './fixtures'
 
-test.describe('conta e sessão', () => {
-  test('cadastro cria sessão e volta ao fluxo anterior', async ({ page, mock, isMobile }) => {
+test.describe('account and session', () => {
+  test('sign up creates a session and returns to the previous flow', async ({
+    page,
+    mock,
+    isMobile,
+  }) => {
     await mock.goto('/cadastro?redirect=%2Fnft%2Femerald-ape-042')
     await page.getByPlaceholder('Nome de usuário').fill('novo_colecionador')
     await page.getByPlaceholder('Digite seu e-mail', { exact: true }).fill('novo@kurio.app')
@@ -13,9 +17,9 @@ test.describe('conta e sessão', () => {
     if (!isMobile) await expect(page.getByRole('link', { name: 'novo_colecionador' })).toBeVisible()
   })
 
-  test.describe('conflito de cadastro', () => {
+  test.describe('sign up conflict', () => {
     test.use({ scenario: 'register-conflict' })
-    test('erro do servidor aparece no campo de e-mail', async ({ page, mock }) => {
+    test('server error shows on the email field', async ({ page, mock }) => {
       await mock.goto('/cadastro')
       await page.getByPlaceholder('Nome de usuário').fill('outro_user')
       await page.getByPlaceholder('Digite seu e-mail', { exact: true }).fill('outro@kurio.app')
@@ -27,7 +31,7 @@ test.describe('conta e sessão', () => {
     })
   })
 
-  test('login inválido, login válido e logout', async ({ page, mock, isMobile }) => {
+  test('invalid login, valid login and logout', async ({ page, mock, isMobile }) => {
     await mock.goto('/login')
     await page.getByPlaceholder('contato@email.com').fill(users.ana.email)
     await page.getByPlaceholder('Senha').fill('errada')
@@ -46,9 +50,9 @@ test.describe('conta e sessão', () => {
     await expect(page).toHaveURL(/\/login\?redirect=/)
   })
 
-  test.describe('sessão expirada', () => {
+  test.describe('expired session', () => {
     test.use({ scenario: 'session-expired' })
-    test('expiração durante a navegação leva ao login preservando o destino', async ({
+    test('expiry while browsing redirects to login and preserves the destination', async ({
       page,
       mock,
     }) => {
@@ -65,7 +69,7 @@ test.describe('conta e sessão', () => {
     })
   })
 
-  test('troca de usuário não vaza carrinho nem favoritos', async ({ page, mock }) => {
+  test('switching users leaks neither cart nor favorites', async ({ page, mock }) => {
     await mock.goto('/')
     await mock.login('ana')
     await mock.addToCart('nft_042', 'e50', 2)

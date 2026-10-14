@@ -9,11 +9,14 @@ import {
   relatedNftsSchema,
   sessionResponseSchema,
   nftSummarySchema,
+  orderSchema,
+  quoteSchema,
   userSchema,
   walletSchema,
   walletsResponseSchema,
   type AddCartItemInput,
   type CatalogQuery,
+  type CreateOrderInput,
   type LoginInput,
   type PasswordInput,
   type ProfileInput,
@@ -50,6 +53,18 @@ export const cartApi = {
   get: (signal?: AbortSignal) => api.get('/cart', { signal }).then((r) => cartSchema.parse(r.data)),
   addItem: (input: AddCartItemInput) =>
     api.post('/cart/items', input).then((r) => cartSchema.parse(r.data)),
+  updateItem: (itemId: string, quantity: number) =>
+    api.patch(`/cart/items/${itemId}`, { quantity }).then((r) => cartSchema.parse(r.data)),
+  removeItem: (itemId: string) =>
+    api.delete(`/cart/items/${itemId}`).then((r) => cartSchema.parse(r.data)),
+  applyCoupon: (code: string) =>
+    api.put('/cart/coupon', { code }).then((r) => cartSchema.parse(r.data)),
+  removeCoupon: () => api.delete('/cart/coupon').then((r) => cartSchema.parse(r.data)),
+}
+
+export const quoteApi = {
+  current: (signal?: AbortSignal) =>
+    api.post('/quote', {}, { signal }).then((r) => quoteSchema.parse(r.data)),
 }
 
 export const favoritesApi = {
@@ -79,4 +94,13 @@ export const walletsApi = {
     api.get('/wallets', { signal }).then((r) => walletsResponseSchema.parse(r.data)),
   save: (slot: WalletSlot, input: WalletInput) =>
     api.put(`/wallets/${slot}`, input).then((r) => walletSchema.parse(r.data)),
+}
+
+export const ordersApi = {
+  create: (input: CreateOrderInput, idempotencyKey: string) =>
+    api
+      .post('/orders', input, { headers: { 'Idempotency-Key': idempotencyKey } })
+      .then((r) => orderSchema.parse(r.data)),
+  get: (orderId: string, signal?: AbortSignal) =>
+    api.get(`/orders/${orderId}`, { signal }).then((r) => orderSchema.parse(r.data)),
 }

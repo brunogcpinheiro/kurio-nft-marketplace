@@ -92,7 +92,7 @@ export function isScenarioName(value: unknown): value is ScenarioName {
 }
 
 export const scenarioState = {
-  serverErrorHits: 0,
+  serverErrorHits: {} as Record<string, number>,
   sessionExpiredConsumed: false,
   lastCatalogCallAt: 0,
 }
@@ -108,7 +108,7 @@ export function getScenario(): ScenarioName {
 
 export function setScenario(name: ScenarioName) {
   localStorage.setItem(scenarioStorageKey, name)
-  scenarioState.serverErrorHits = 0
+  scenarioState.serverErrorHits = {}
   scenarioState.sessionExpiredConsumed = false
   scenarioState.lastCatalogCallAt = 0
 }

@@ -1,13 +1,13 @@
 # Lighthouse
 
-Medições em 2026-10-14T03:02:58.819Z com build de produção (`pnpm build && pnpm preview`), mocks ativos no cenário padrão, 2 execuções por página e perfil após uma execução de aquecimento para registrar o service worker. Os valores abaixo são a mediana de cada categoria e métrica.
+Medições em 2026-10-14T12:32:55.570Z com build de produção (`pnpm build && pnpm preview`), mocks ativos no cenário padrão, 3 execuções por página e perfil após uma execução de aquecimento para registrar o service worker. Os valores abaixo são a mediana de cada categoria e métrica.
 
 | Página | Perfil | Performance | Accessibility | Best Practices | SEO | LCP | CLS | TBT |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| / | mobile | **71** | 100 | 100 | 100 | 4662 ms | 0.000 | 240 ms |
-| / | desktop | 99 | 100 | 100 | 100 | 842 ms | 0.000 | 0 ms |
-| /nft/emerald-ape-042 | mobile | **77** | 100 | 100 | 100 | 4351 ms | 0.000 | 78 ms |
-| /nft/emerald-ape-042 | desktop | 99 | 100 | 100 | 100 | 915 ms | 0.000 | 0 ms |
+| / | mobile | **69** | 100 | 100 | 100 | 4601 ms | 0.000 | 295 ms |
+| / | desktop | 99 | 100 | 100 | 100 | 843 ms | 0.000 | 0 ms |
+| /nft/emerald-ape-042 | mobile | **75** | 100 | 100 | 100 | 4395 ms | 0.000 | 136 ms |
+| /nft/emerald-ape-042 | desktop | 98 | 100 | 100 | 100 | 919 ms | 0.000 | 0 ms |
 
 Metas: Performance ≥ 90, Accessibility ≥ 95, Best Practices ≥ 95, SEO ≥ 90. Valores em negrito ficaram abaixo da meta.
 
@@ -17,29 +17,33 @@ Metas: Performance ≥ 90, Accessibility ≥ 95, Best Practices ≥ 95, SEO ≥ 
 
 | # | Performance | Accessibility | Best Practices | SEO | LCP | CLS | TBT |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1 | 70 | 100 | 100 | 100 | 4660 ms | 0.000 | 250 ms |
-| 2 | 71 | 100 | 100 | 100 | 4664 ms | 0.000 | 229 ms |
+| 1 | 71 | 100 | 100 | 100 | 4561 ms | 0.000 | 248 ms |
+| 2 | 66 | 100 | 100 | 100 | 4601 ms | 0.000 | 380 ms |
+| 3 | 69 | 100 | 100 | 100 | 4646 ms | 0.000 | 295 ms |
 
 ### / (desktop)
 
 | # | Performance | Accessibility | Best Practices | SEO | LCP | CLS | TBT |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1 | 99 | 100 | 100 | 100 | 842 ms | 0.000 | 0 ms |
-| 2 | 99 | 100 | 100 | 100 | 842 ms | 0.000 | 0 ms |
+| 1 | 99 | 100 | 100 | 100 | 845 ms | 0.000 | 0 ms |
+| 2 | 99 | 100 | 100 | 100 | 832 ms | 0.000 | 0 ms |
+| 3 | 99 | 100 | 100 | 100 | 843 ms | 0.000 | 0 ms |
 
 ### /nft/emerald-ape-042 (mobile)
 
 | # | Performance | Accessibility | Best Practices | SEO | LCP | CLS | TBT |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1 | 77 | 100 | 100 | 100 | 4358 ms | 0.000 | 84 ms |
-| 2 | 77 | 100 | 100 | 100 | 4345 ms | 0.000 | 72 ms |
+| 1 | 75 | 100 | 100 | 100 | 4395 ms | 0.000 | 136 ms |
+| 2 | 75 | 100 | 100 | 100 | 4449 ms | 0.000 | 129 ms |
+| 3 | 75 | 100 | 100 | 100 | 4374 ms | 0.000 | 164 ms |
 
 ### /nft/emerald-ape-042 (desktop)
 
 | # | Performance | Accessibility | Best Practices | SEO | LCP | CLS | TBT |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1 | 99 | 100 | 100 | 100 | 918 ms | 0.000 | 0 ms |
-| 2 | 99 | 100 | 100 | 100 | 913 ms | 0.000 | 0 ms |
+| 1 | 98 | 100 | 100 | 100 | 919 ms | 0.000 | 0 ms |
+| 2 | 99 | 100 | 100 | 100 | 918 ms | 0.000 | 0 ms |
+| 3 | 98 | 100 | 100 | 100 | 930 ms | 0.000 | 0 ms |
 
 ## Ambiente
 

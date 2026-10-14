@@ -92,6 +92,7 @@ export function Header() {
               <Link
                 to="/login"
                 search={{ redirect: pathname === '/' ? undefined : pathname }}
+                data-login-link
                 className="bg-brand-strong text-bg flex h-[35px] w-[100px] items-center justify-center gap-1 rounded-md text-base font-medium"
               >
                 <LoginIcon className="size-5" />

@@ -128,8 +128,9 @@ export function mocked<Params extends PathParams = PathParams>(
     await networkDelay(options.key ?? '')
     const scenario = getScenario()
     if (scenario === 'offline') return HttpResponse.error()
-    if (scenario === 'server-error' && options.flaky && scenarioState.serverErrorHits < 3) {
-      scenarioState.serverErrorHits += 1
+    const hits = scenarioState.serverErrorHits[options.key ?? ''] ?? 0
+    if (scenario === 'server-error' && options.flaky && hits < 3) {
+      scenarioState.serverErrorHits[options.key ?? ''] = hits + 1
       return fail(503, 'UNAVAILABLE', 'Serviço temporariamente indisponível. Tente novamente.')
     }
     if (

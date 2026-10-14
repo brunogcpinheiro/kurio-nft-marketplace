@@ -1,7 +1,7 @@
 import { expect, test } from './fixtures'
 
-test.describe('favoritos', () => {
-  test('exige sessão e persiste após recarregar', async ({ page, mock }) => {
+test.describe('favorites', () => {
+  test('requires a session and persists after reload', async ({ page, mock }) => {
     await mock.goto('/nft/ivory-baron-088')
     await page
       .getByRole('button', { name: /Favoritar Ivory Baron/ })
@@ -30,9 +30,9 @@ test.describe('favoritos', () => {
     await expect(page.getByTestId('favorites-grid')).toContainText('Ivory Baron #088')
   })
 
-  test.describe('falha na mutation', () => {
+  test.describe('mutation failure', () => {
     test.use({ scenario: 'favorites-fail' })
-    test('atualização otimista reverte e avisa', async ({ page, mock }) => {
+    test('optimistic update rolls back and notifies', async ({ page, mock }) => {
       await mock.goto('/')
       await mock.login('bruno')
       await mock.goto('/nft/golden-beat-207')
