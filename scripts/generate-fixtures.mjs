@@ -105,7 +105,7 @@ const extraAttributes = [
 ]
 
 const featured = [
-  ['Emerald Ape', '042', 'emerald', '1.19', null, true, 'arte-digital', 'ethereum'],
+  ['Emerald Ape', '042', 'emerald', '1.19', null, false, 'arte-digital', 'ethereum'],
   ['Sage Nomad', '009', 'sage', '1.69', null, false, 'colecionaveis', 'ethereum'],
   ['Neon Vessel', '552', 'ivory', '1.99', '2.29', true, 'arte-3d', 'polygon'],
   ['Cosmic Bloom', '118', 'sage', '1.29', null, false, 'generativa', 'ethereum'],

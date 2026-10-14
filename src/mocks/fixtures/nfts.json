@@ -7,17 +7,17 @@
     "imageKey": "emerald",
     "price": "1.19",
     "previousPrice": null,
-    "rare": true,
+    "rare": false,
     "network": "ethereum",
     "category": "arte-digital",
     "version": 1,
     "collection": "Kurio Apes",
     "description": "Um colecionável digital finalizado à mão da coleção Kurio Apes, verificado na Ethereum, com arte desbloqueável e acesso para colecionadores.",
     "longDescription": "Emerald Ape #042 é uma obra digital 1/50 finalizada à mão da coleção Kurio Apes. Cada atributo fica armazenado nos metadados do token e verificado na Ethereum. A obra explora identidade, movimento e luz em um mundo digital sem fronteiras.\n\nA propriedade inclui a arte em alta resolução, lançamentos exclusivos para colecionadores e um registro permanente de procedência registrada na rede. O criador recebe 5% de direitos autorais nas vendas secundárias, apoiando novos trabalhos e lançamentos da comunidade.",
-    "attributes": ["Óculos", "Esmeralda", "Raro"],
+    "attributes": ["Óculos", "Esmeralda", "Assinado"],
     "rating": {
-      "average": 4.8,
-      "count": 12
+      "average": 4.1,
+      "count": 3
     },
     "editions": [
       {
@@ -49,9 +49,9 @@
         "total": null
       }
     ],
-    "contract": "0x007bec4f2d2de69b36876ed56b0733c86f2b0663",
+    "contract": "0x07bec4f2d2de69b36876ed56b0733c86f2b06634",
     "listedAt": "2026-10-12T12:00:00.000Z",
-    "trendingScore": 79
+    "trendingScore": 76
   },
   {
     "id": "nft_009",
@@ -78,14 +78,14 @@
         "id": "e1",
         "label": "1/1",
         "price": "6.76",
-        "available": 0,
+        "available": 1,
         "total": 1
       },
       {
         "id": "e10",
         "label": "1/10",
         "price": "2.70",
-        "available": 1,
+        "available": 0,
         "total": 10
       },
       {

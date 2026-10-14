@@ -27,7 +27,7 @@ export const scenarioList = [
   {
     name: 'server-error',
     title: 'Erro no servidor',
-    description: 'Catálogo e conteúdo respondem 503 nas duas primeiras tentativas.',
+    description: 'Catálogo e conteúdo respondem 503 nas três primeiras tentativas, depois voltam.',
   },
   {
     name: 'session-expired',

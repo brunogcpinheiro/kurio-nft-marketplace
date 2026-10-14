@@ -10,33 +10,118 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/_auth'
+import { Route as CarrinhoRouteImport } from './routes/carrinho'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthPerfilRouteImport } from './routes/_auth.perfil'
+import { Route as NftSlugRouteImport } from './routes/nft.$slug'
+import { Route as AuthPerfilIndexRouteImport } from './routes/_auth.perfil.index'
+import { Route as AuthPerfilFavoritosRouteImport } from './routes/_auth.perfil.favoritos'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CarrinhoRoute = CarrinhoRouteImport.update({
+  id: '/carrinho',
+  path: '/carrinho',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthPerfilRoute = AuthPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => AuthRoute,
+} as any)
+const NftSlugRoute = NftSlugRouteImport.update({
+  id: '/nft/$slug',
+  path: '/nft/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthPerfilIndexRoute = AuthPerfilIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthPerfilRoute,
+} as any)
+const AuthPerfilFavoritosRoute = AuthPerfilFavoritosRouteImport.update({
+  id: '/favoritos',
+  path: '/favoritos',
+  getParentRoute: () => AuthPerfilRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/carrinho': typeof CarrinhoRoute
+  '/login': typeof LoginRoute
+  '/perfil': typeof AuthPerfilRouteWithChildren
+  '/nft/$slug': typeof NftSlugRoute
+  '/perfil/favoritos': typeof AuthPerfilFavoritosRoute
+  '/perfil/': typeof AuthPerfilIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/carrinho': typeof CarrinhoRoute
+  '/login': typeof LoginRoute
+  '/nft/$slug': typeof NftSlugRoute
+  '/perfil/favoritos': typeof AuthPerfilFavoritosRoute
+  '/perfil': typeof AuthPerfilIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/carrinho': typeof CarrinhoRoute
+  '/login': typeof LoginRoute
+  '/_auth/perfil': typeof AuthPerfilRouteWithChildren
+  '/nft/$slug': typeof NftSlugRoute
+  '/_auth/perfil/favoritos': typeof AuthPerfilFavoritosRoute
+  '/_auth/perfil/': typeof AuthPerfilIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/carrinho'
+    | '/login'
+    | '/perfil'
+    | '/nft/$slug'
+    | '/perfil/favoritos'
+    | '/perfil/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/carrinho'
+    | '/login'
+    | '/nft/$slug'
+    | '/perfil/favoritos'
+    | '/perfil'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/carrinho'
+    | '/login'
+    | '/_auth/perfil'
+    | '/nft/$slug'
+    | '/_auth/perfil/favoritos'
+    | '/_auth/perfil/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRouteWithChildren
+  CarrinhoRoute: typeof CarrinhoRoute
+  LoginRoute: typeof LoginRoute
+  NftSlugRoute: typeof NftSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +133,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/carrinho': {
+      id: '/carrinho'
+      path: '/carrinho'
+      fullPath: '/carrinho'
+      preLoaderRoute: typeof CarrinhoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth/perfil': {
+      id: '/_auth/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof AuthPerfilRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/nft/$slug': {
+      id: '/nft/$slug'
+      path: '/nft/$slug'
+      fullPath: '/nft/$slug'
+      preLoaderRoute: typeof NftSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth/perfil/': {
+      id: '/_auth/perfil/'
+      path: '/'
+      fullPath: '/perfil/'
+      preLoaderRoute: typeof AuthPerfilIndexRouteImport
+      parentRoute: typeof AuthPerfilRoute
+    }
+    '/_auth/perfil/favoritos': {
+      id: '/_auth/perfil/favoritos'
+      path: '/favoritos'
+      fullPath: '/perfil/favoritos'
+      preLoaderRoute: typeof AuthPerfilFavoritosRouteImport
+      parentRoute: typeof AuthPerfilRoute
+    }
   }
 }
 
+interface AuthPerfilRouteChildren {
+  AuthPerfilFavoritosRoute: typeof AuthPerfilFavoritosRoute
+  AuthPerfilIndexRoute: typeof AuthPerfilIndexRoute
+}
+
+const AuthPerfilRouteChildren: AuthPerfilRouteChildren = {
+  AuthPerfilFavoritosRoute: AuthPerfilFavoritosRoute,
+  AuthPerfilIndexRoute: AuthPerfilIndexRoute,
+}
+
+const AuthPerfilRouteWithChildren = AuthPerfilRoute._addFileChildren(
+  AuthPerfilRouteChildren,
+)
+
+interface AuthRouteChildren {
+  AuthPerfilRoute: typeof AuthPerfilRouteWithChildren
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthPerfilRoute: AuthPerfilRouteWithChildren,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRouteWithChildren,
+  CarrinhoRoute: CarrinhoRoute,
+  LoginRoute: LoginRoute,
+  NftSlugRoute: NftSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

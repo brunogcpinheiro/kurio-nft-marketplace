@@ -5,7 +5,7 @@ import { applyNftChange } from '../catalog-changes'
 import { resetDb } from '../db'
 import { ApiFailure, guard, json, noContent, parseBody } from '../http'
 import { getScenario, isScenarioName, scenarioList, setScenario } from '../scenarios'
-import { emitRealtime } from '../socket-server'
+import { disconnectAllSockets, emitRealtime, listSocketConnections } from '../socket-server'
 
 const scenarioInput = z.object({ name: z.string() })
 
@@ -58,5 +58,16 @@ export const controlHandlers = [
       emitRealtime(input.event, event)
       return noContent()
     }),
+  ),
+  http.post(
+    '/api/__mock/socket/disconnect',
+    guard(() => {
+      disconnectAllSockets()
+      return noContent()
+    }),
+  ),
+  http.get(
+    '/api/__mock/socket/connections',
+    guard(() => json({ connections: listSocketConnections() })),
   ),
 ]
