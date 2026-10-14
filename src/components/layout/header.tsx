@@ -36,6 +36,7 @@ export function Header() {
   const pathname = useRouterState({ select: (s) => s.location.pathname })
   const section = sectionFor(pathname)
   const { user, isAuthenticated } = useSession()
+  const navigate = useNavigate()
   const count = useCartCount()
 
   return (
@@ -61,12 +62,19 @@ export function Header() {
               Mercado
             </Link>
             <OutOfScopeLink className={navClass}>Criadores</OutOfScopeLink>
-            <OutOfScopeLink className={navClass}>Aprenda</OutOfScopeLink>
+            <Link to="/" hash="blog" className={navClass}>
+              Aprenda
+            </Link>
           </nav>
           <div className="flex h-[35px] items-center gap-7">
             <HeaderSearch />
             <Link
               to="/carrinho"
+              onClick={(event) => {
+                if (user) return
+                event.preventDefault()
+                void navigate({ to: '/login', search: { redirect: '/carrinho' } })
+              }}
               className="relative flex size-6 items-center"
               aria-label={`Carrinho, ${count} ${count === 1 ? 'item' : 'itens'}`}
             >

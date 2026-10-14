@@ -189,9 +189,9 @@ export function Footer() {
                     <OutOfScopeLink
                       label={label}
                       aria-label={label}
-                      className="border-brand-strong text-brand-strong flex size-[30px] items-center justify-center rounded border"
+                      className="text-brand-strong flex size-[30px] items-center justify-center"
                     >
-                      <Icon className="size-4" />
+                      <Icon className="size-[30px]" />
                     </OutOfScopeLink>
                   </li>
                 ))}

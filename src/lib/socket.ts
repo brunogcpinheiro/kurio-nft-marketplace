@@ -1,6 +1,7 @@
 import { io, type Socket } from 'socket.io-client'
 import { session } from '@/features/auth/session'
 import { guestCart } from '@/features/cart/use-guest-cart'
+import { env } from '@/lib/env'
 import { mocksReady } from '@/lib/mocks-ready'
 
 let socket: Socket | null = null
@@ -11,7 +12,7 @@ function identity() {
 
 export function getSocket(): Socket {
   if (!socket) {
-    socket = io(import.meta.env.VITE_SOCKET_URL, {
+    socket = io(env.socketUrl, {
       autoConnect: false,
       transports: ['websocket'],
       auth: (cb) => cb(identity()),

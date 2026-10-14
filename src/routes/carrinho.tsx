@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { session } from '@/features/auth/session'
 import { CartItems, CartItemsSkeleton } from '@/features/cart/cart-items'
 import { CartSummary } from '@/features/cart/cart-summary'
-import { useCart, useQuote } from '@/features/cart/queries'
+import { useCart, useCartOwnerKey, useQuote } from '@/features/cart/queries'
 import { RelatedNfts } from '@/features/nft/related'
 import { RealtimeBanner } from '@/features/realtime/realtime-banner'
 
@@ -18,6 +18,8 @@ export const Route = createFileRoute('/carrinho')({
 
 function CartPage() {
   const cart = useCart()
+  const anonymous = useCartOwnerKey() === 'anonymous'
+  const loading = cart.isPending && !anonymous
   const hasItems = (cart.data?.items.length ?? 0) > 0
   const quote = useQuote(hasItems)
   const navigate = useNavigate()
@@ -35,7 +37,7 @@ function CartPage() {
     void navigate({ to: '/pagamento' })
   }
 
-  const empty = cart.data && !hasItems
+  const empty = anonymous || (cart.data && !hasItems)
   const firstSlug = cart.data?.items[0]?.nft.slug
 
   return (
@@ -52,7 +54,7 @@ function CartPage() {
           <RealtimeBanner className="mt-4" />
           <div className="mt-3 flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-[86px]">
             <div className="min-w-0 flex-1">
-              {cart.isPending ? (
+              {loading ? (
                 <CartItemsSkeleton variant="desktop" />
               ) : cart.isError ? (
                 <ErrorState
@@ -105,7 +107,7 @@ function CartPage() {
           </div>
           <RealtimeBanner className="mt-4" />
           <div className="mt-6 pb-[380px]">
-            {cart.isPending ? (
+            {loading ? (
               <CartItemsSkeleton variant="mobile" />
             ) : cart.isError ? (
               <ErrorState

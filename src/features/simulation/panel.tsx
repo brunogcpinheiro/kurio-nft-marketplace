@@ -9,7 +9,6 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from '@/components/ui/sheet'
 import { useCart } from '@/features/cart/queries'
 import { useScenario } from './use-scenario'
@@ -44,15 +43,6 @@ export function SimulationPanel() {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
-        <button
-          type="button"
-          className="text-fg-subtle hover:text-fg text-xs underline-offset-4 hover:underline"
-          data-testid="simulation-trigger"
-        >
-          Simulação
-        </button>
-      </SheetTrigger>
       <SheetContent side="right" className="bg-bg w-[360px] overflow-y-auto sm:max-w-[360px]">
         <SheetHeader>
           <SheetTitle>Simulação de rede</SheetTitle>

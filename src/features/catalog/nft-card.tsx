@@ -47,11 +47,6 @@ export function NftCard({
             className="size-full rounded-2xl object-cover md:rounded-[15px]"
           />
         </Link>
-        {nft.rare ? (
-          <span className="bg-brand-strong text-bg absolute top-4 left-0 px-2 py-2 text-[13px] leading-4 font-medium md:top-6">
-            RARO
-          </span>
-        ) : null}
         {onToggleFavorite ? (
           <button
             type="button"

@@ -28,6 +28,23 @@ pnpm build
 pnpm preview
 ```
 
+## Variáveis de ambiente
+
+Nenhuma variável é obrigatória: sem arquivo `.env` o app sobe com os mocks ligados e os endereços da tabela abaixo. O `.env.example` lista as variáveis com esses valores. Para personalizar, copie ou renomeie o exemplo para `.env.development` (usado por `pnpm dev`) ou `.env.production` (usado por `pnpm build`); os arquivos `.env*` são ignorados pelo git, exceto o exemplo.
+
+```bash
+cp .env.example .env.development
+cp .env.example .env.production
+```
+
+| Variável           | Padrão                       | Uso                                                                          |
+| ------------------ | ---------------------------- | ---------------------------------------------------------------------------- |
+| `VITE_API_MOCKING` | `true`                       | Liga o MSW. Com `false`, o app fala com `VITE_API_URL` sem interceptação     |
+| `VITE_API_URL`     | `/api`                       | Base das chamadas REST do Axios                                              |
+| `VITE_SOCKET_URL`  | `wss://realtime.kurio.local` | Endereço do servidor Socket.IO. Com os mocks ligados é interceptado pelo MSW |
+
+Para apontar para uma API real, basta `VITE_API_MOCKING=false` e os endereços corretos, nesses arquivos ou nas variáveis do projeto na Vercel.
+
 ## Credenciais fictícias
 
 | Usuário        | E-mail            | Senha      | Observações                                                               |
@@ -37,14 +54,46 @@ pnpm preview
 
 Qualquer cadastro novo funciona durante a sessão do browser. As senhas ficam em `localStorage` apenas como hash SHA-256.
 
-Cupons: `KURIO10` (10% de desconto) e `GENESIS` (expirado). Qualquer outro código é inválido.
+Carteiras já cadastradas na conta da Ana, usadas no pagamento:
+
+| Slot       | Apelido   | Rede     | Provedor | Endereço                                     |
+| ---------- | --------- | -------- | -------- | -------------------------------------------- |
+| Principal  | Principal | Ethereum | MetaMask | `0xA91F3c8E2b7D4a6F1e9C0b5A8d7E6f4C3b2A1E82` |
+| Secundária | Reserva   | Polygon  | Coinbase | `0x5B2c9D1e7F4a3B6c8E0d2F1a9C7b5E3d4A6F8C21` |
+
+Endereços Ethereum e Polygon precisam ser `0x` com 40 caracteres hexadecimais; Solana aceita 32 a 44 caracteres em base58. Qualquer valor nesse formato é aceito.
+
+Cupons de desconto:
+
+| Código    | Efeito                 |
+| --------- | ---------------------- |
+| `KURIO10` | 10% sobre o subtotal   |
+| `GENESIS` | Responde como expirado |
+| outro     | Responde como inválido |
+
+Dados do catálogo úteis para testar:
+
+- `Emerald Ape #042` (`/nft/emerald-ape-042`) é o primeiro card e o alvo das ações de preço do painel de simulação.
+- `Sage Nomad #009` tem a edição 1/1 esgotada e a 1/10 com uma única unidade, para ver o limite do stepper e o bloqueio de compra.
+- Cada NFT tem quatro edições (1/1, 1/10, 1/50 e aberta) com preços diferentes; o preço do card é o da edição 1/50.
+- A taxa de rede da cotação é 0.016 ETH na Ethereum, 0.002 na Polygon e 0.001 na Solana, pela rede predominante no carrinho.
+
+## Fluxo completo de compra
+
+1. Na home, use busca, filtros, ordenação e paginação (tudo fica na URL) e abra um NFT.
+2. No detalhe, escolha a edição e a quantidade e clique em "Comprar". Visitantes também podem montar o carrinho.
+3. No carrinho, ajuste quantidades, aplique um cupom e clique em "Conectar e finalizar". Sem sessão, você vai ao login e volta para o pagamento com o carrinho preservado e fundido ao da conta.
+4. No pagamento, os dados do colecionador vêm do perfil. Escolha uma carteira cadastrada (ou informe outra), selecione o provedor, clique em "Conectar carteira" (a conexão é simulada e leva 1,2 s) e confirme a compra.
+5. O pedido fica pendente por 3 s e então aparece o recibo com hash e link para o explorador. Com o cenário `payment-rejected`, ele é recusado e os itens voltam a ficar disponíveis no carrinho.
+
+Perfil, carteiras e favoritos ficam em `/perfil`, `/perfil/carteiras` e `/perfil/favoritos`. O coração nos cards e no detalhe exige sessão; sem ela, você é levado ao login e volta para onde estava.
 
 ## Cenários de simulação
 
 Os mocks têm um cenário ativo que muda latência, falhas e comportamento dos fluxos. Dá para escolher de três formas:
 
 - Pela URL: `http://localhost:5173/?scenario=slow-network`. O parâmetro é lido no boot, gravado em `localStorage` e removido da URL.
-- Pelo painel "Simulação", no rodapé de qualquer página, ou com o atalho `Ctrl+.`. O painel também dispara eventos de tempo real manualmente e reseta os dados.
+- Pelo painel de simulação, aberto com o atalho `Ctrl+.` em qualquer página (não há link visível; no celular use a URL). O painel também dispara eventos de tempo real manualmente e reseta os dados.
 - Pelo endpoint interno `PUT /api/__mock/scenario` com `{ "name": "..." }`, que é o que os testes usam.
 
 Para voltar ao estado inicial: `http://localhost:5173/?reset=1` ou o botão "Resetar dados simulados" no painel. O reset recria catálogo, usuários, carrinhos e pedidos e encerra a sessão.
@@ -102,16 +151,6 @@ Para voltar ao estado inicial: `http://localhost:5173/?reset=1` ou o botão "Res
 Os testes E2E sobem o preview do build automaticamente. O relatório HTML fica em `playwright-report/` e os traces das falhas em `test-results/`. Os baselines visuais em `e2e/visual.spec.ts-snapshots/` foram gerados em Linux; em outro sistema é preciso regenerá-los.
 
 A auditoria Lighthouse escreve os relatórios em `lighthouse/reports/` e o resumo com medianas em `lighthouse/RESULTS.md`. A configuração está em `lighthouse/config.mjs`.
-
-## Variáveis de ambiente
-
-| Variável           | Padrão                       | Uso                                                                          |
-| ------------------ | ---------------------------- | ---------------------------------------------------------------------------- |
-| `VITE_API_MOCKING` | `true`                       | Liga o MSW. Com `false`, o app fala com `VITE_API_URL` sem interceptação     |
-| `VITE_API_URL`     | `/api`                       | Base das chamadas REST do Axios                                              |
-| `VITE_SOCKET_URL`  | `wss://realtime.kurio.local` | Endereço do servidor Socket.IO. Com os mocks ligados é interceptado pelo MSW |
-
-Os arquivos `.env.development` e `.env.production` estão versionados porque só contêm essas flags. Para apontar para uma API real, basta `VITE_API_MOCKING=false` e os endereços corretos.
 
 ## Estrutura
 

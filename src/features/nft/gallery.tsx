@@ -1,9 +1,15 @@
 import { useState } from 'react'
 import { cn } from 'cn'
 import type { Nft } from '@/api/schemas'
-import { SearchIcon } from '@/components/icons'
+import { CloseIcon, SearchIcon } from '@/components/icons'
 import { NftImage } from '@/components/nft-image'
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from '@/components/ui/dialog'
 
 const views = ['Frente', 'Detalhe', 'Fundo', 'Assinatura']
 
@@ -53,13 +59,22 @@ export function Gallery({ nft }: { nft: Nft }) {
           type="button"
           onClick={() => setZoom(true)}
           aria-label="Ampliar imagem"
-          className="bg-surface border-surface-strong text-fg absolute top-4 right-4 hidden size-[30px] items-center justify-center rounded-full border md:flex"
+          className="bg-surface border-surface-strong text-fg absolute top-[13px] right-3 hidden size-[30px] items-center justify-center rounded-full border md:flex"
         >
           <SearchIcon className="size-5" />
         </button>
       </div>
       <Dialog open={zoom} onOpenChange={setZoom}>
-        <DialogContent className="bg-bg max-w-[940px] border-0 p-4">
+        <DialogContent className="bg-bg max-w-[940px] border-0 p-4" showCloseButton={false}>
+          <DialogClose asChild>
+            <button
+              type="button"
+              aria-label="Fechar"
+              className="bg-surface border-surface-strong text-fg absolute top-7 right-7 z-10 flex size-[30px] items-center justify-center rounded-full border"
+            >
+              <CloseIcon className="size-[18px]" />
+            </button>
+          </DialogClose>
           <DialogTitle className="sr-only">{nft.name}</DialogTitle>
           <DialogDescription className="sr-only">Imagem ampliada do NFT</DialogDescription>
           <NftImage

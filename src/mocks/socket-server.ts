@@ -1,6 +1,7 @@
 import { toSocketIo } from '@mswjs/socket.io-binding'
 import { ws } from 'msw'
 import { realtimeEvents } from '@/api/schemas'
+import { env } from '@/lib/env'
 import { applyNftChange } from './catalog-changes'
 import { getDb } from './db'
 import { findSession } from './http'
@@ -16,7 +17,7 @@ type Connection = {
   close: () => void
 }
 
-const link = ws.link(`${import.meta.env.VITE_SOCKET_URL}/*`)
+const link = ws.link(`${env.socketUrl}/*`)
 const connections = new Map<string, Connection>()
 const pingIntervalMs = 20000
 

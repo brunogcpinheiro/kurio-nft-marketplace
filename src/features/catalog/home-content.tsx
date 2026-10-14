@@ -34,7 +34,7 @@ export function HomeContent({ search, update, reset }: Props) {
           <FiltersDrawer facets={catalog.data?.facets} search={search} onChange={update} />
         </div>
 
-        <Hero content={content.data?.hero} />
+        <Hero slides={content.data?.slides} />
 
         <section
           id="catalogo"

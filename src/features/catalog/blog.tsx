@@ -5,7 +5,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 export function Blog({ posts }: { posts?: HomeContent['posts'] }) {
   return (
-    <section aria-labelledby="blog-title" className="flex flex-col gap-10">
+    <section id="blog" aria-labelledby="blog-title" className="flex scroll-mt-6 flex-col gap-10">
       <div className="flex flex-col gap-3 text-center">
         <h2 id="blog-title" className="text-fg text-[22px] leading-9 font-bold md:text-[28px]">
           Diário da Cunhagem

@@ -1,16 +1,19 @@
 import { z } from 'zod'
 import { nftSummarySchema } from './nft'
 
+export const heroSlideSchema = z.object({
+  eyebrow: z.string(),
+  title: z.string(),
+  mobileTitle: z.string(),
+  description: z.string(),
+  mobileDescription: z.string(),
+  cta: z.string(),
+  imageKey: z.enum(['emerald', 'sage', 'ivory', 'golden']),
+})
+export type HeroSlide = z.infer<typeof heroSlideSchema>
+
 export const homeContentSchema = z.object({
-  hero: z.object({
-    eyebrow: z.string(),
-    title: z.string(),
-    mobileTitle: z.string(),
-    description: z.string(),
-    mobileDescription: z.string(),
-    cta: z.string(),
-    imageKey: z.enum(['emerald', 'sage', 'ivory', 'golden']),
-  }),
+  slides: z.array(heroSlideSchema).min(1),
   featured: nftSummarySchema,
   promos: z.array(
     z.object({

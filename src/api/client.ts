@@ -1,10 +1,11 @@
 import axios from 'axios'
 import { session } from '@/features/auth/session'
 import { guestCart } from '@/features/cart/use-guest-cart'
+import { env } from '@/lib/env'
 import { mocksReady } from '@/lib/mocks-ready'
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: env.apiUrl,
   timeout: 8000,
   headers: { Accept: 'application/json' },
 })

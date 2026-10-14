@@ -1,6 +1,7 @@
-import { Link, useRouterState } from '@tanstack/react-router'
+import { Link, useNavigate, useRouterState } from '@tanstack/react-router'
 import { cn } from 'cn'
 import { HeartIcon, HomeIcon, ScanIcon, ShopIcon, UserIcon } from '@/components/icons'
+import { useStoredSession } from '@/features/auth/session'
 import { useCartCount } from '@/features/cart/queries'
 
 const itemClass = 'flex size-11 items-center justify-center rounded-full text-fg-muted'
@@ -9,6 +10,8 @@ const activeClass = 'text-brand'
 export function BottomNav() {
   const pathname = useRouterState({ select: (s) => s.location.pathname })
   const count = useCartCount()
+  const stored = useStoredSession()
+  const navigate = useNavigate()
   const is = (prefix: string) => (prefix === '/' ? pathname === '/' : pathname.startsWith(prefix))
 
   return (
@@ -46,6 +49,11 @@ export function BottomNav() {
           <span className="w-16" aria-hidden="true" />
           <Link
             to="/carrinho"
+            onClick={(event) => {
+              if (stored) return
+              event.preventDefault()
+              void navigate({ to: '/login', search: { redirect: '/carrinho' } })
+            }}
             className={cn(itemClass, 'relative', is('/carrinho') && activeClass)}
             aria-label={`Carrinho, ${count} itens`}
           >

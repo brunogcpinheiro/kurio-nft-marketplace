@@ -155,18 +155,11 @@ As fixtures são geradas por `scripts/generate-fixtures.mjs` com seed fixa: 60 N
 - Mudanças de preço e disponibilidade chegadas por evento aparecem como toast e, no carrinho e no pagamento, como banner fixo até serem dispensadas. Linhas afetadas mostram o preço anterior riscado ou a marcação de esgotado, e o botão de confirmar fica bloqueado enquanto houver linha indisponível.
 - No mobile o pagamento é dividido em duas etapas (`?step=collector` e `?step=wallet`) para caber na tela, com o passo na URL para o botão voltar funcionar.
 - O recibo é um diálogo no desktop e uma página no mobile. Fechar o diálogo mantém o recibo acessível na própria página.
-- Áreas do layout que não fazem parte da entrega (links de rodapé, login social, newsletter) avisam que estão fora do escopo em vez de fingir que funcionam.
-- O painel de simulação fica no rodapé e no atalho `Ctrl+.`, carregado sob demanda para não pesar nas páginas.
+- Áreas do layout que não fazem parte da entrega (links de rodapé, login social, newsletter, compartilhamento, menu "Criadores") não fingem que funcionam: ao serem acionadas mostram o toast informativo "Indisponível nesta versão", dizendo que aquela área não faz parte desta entrega. O menu "Aprenda" leva à seção "Diário da Cunhagem" da home.
+- O ícone do carrinho no cabeçalho e na navegação inferior, sem sessão, abre o login (diálogo no desktop) com retorno ao carrinho. A página do carrinho continua aceitando visitantes com itens, que são fundidos à conta no login, e um visitante sem nada vê o estado vazio.
+- O painel de simulação abre só pelo atalho `Ctrl+.` (ou pelos parâmetros `?scenario=` e `?reset=1` na URL), sem link visível, porque é ferramenta de demonstração e o Figma não prevê esse elemento. O código do painel é carregado sob demanda.
 
 ## Desvios do Figma
-
-- O protótipo repete quatro ilustrações em todos os cards. Exportei essas quatro do próprio arquivo, converti para WebP em quatro larguras com `srcset` e o catálogo as distribui pelos 60 NFTs via `imageKey`.
-- A fonte Roboto Mono é servida localmente, com `font-display: swap`, em vez de carregada do Google Fonts.
-- O catálogo mostra 9 itens por página com paginação numerada, mantendo a grade do Figma; o protótipo não define o comportamento de paginação.
-- Os estados que o Figma não desenha (skeleton, vazio, erro, banner de evento, diálogo de cotação desatualizada, pedido pendente e recusado) seguem os tokens e componentes do próprio design.
-- Mensagens e rótulos em português; o protótipo mistura idiomas.
-
-## Revisão final de interface
 
 Depois de fechar os fluxos, revisei as telas contra o Figma usando capturas da própria aplicação. Os pontos abaixo são desvios conscientes do protótipo ou casos em que o protótipo é inconsistente e eu mantive a versão coerente. As capturas estão em `docs/ux-improves/`.
 
@@ -174,7 +167,15 @@ Depois de fechar os fluxos, revisei as telas contra o Figma usando capturas da p
 
 ![Hero com padding só à esquerda e indicadores dentro da coluna de texto](ux-improves/padding-hero-and-dots.png)
 
-No Figma o hero tem 40 px de padding só à esquerda (frame `Hero`, padding `0 0 0 40`) e a imagem encosta na borda direita do container. Os três indicadores ficam dentro da coluna de texto, alinhados à direita. Passei a usar 40 px dos dois lados e movi os indicadores para baixo do bloco, centralizados. O motivo é o carrossel que esse hero vai receber: com padding de um lado só, na transição entre slides o texto do próximo encostaria na imagem do anterior, e indicadores dentro da coluna de texto se deslocariam junto com o conteúdo.
+No Figma o hero tem 40 px de padding à esquerda dos textos (frame `Hero`, padding `0 0 0 40`) e a imagem encosta na borda direita do container. Em relação ao Figma original, a única mudança de espaçamento no hero foi remover esse padding-left: os textos passam a alinhar com a margem do container, como o logo e o catálogo, e a imagem continua encostada à direita. Como o carrossel troca de slide por tempo e pelos indicadores, sem arrastar, não há transição lateral que justificasse o respiro. Os três indicadores, que no Figma ficam dentro da coluna de texto alinhados à direita, foram para baixo do bloco, centralizados, para não se deslocarem com o conteúdo de cada slide.
+
+O hero é um carrossel com três slides que vêm de `GET /content/home`. Ele avança a cada 4,5 s, pausa enquanto o ponteiro ou o foco estão sobre ele, não avança quando o sistema pede menos movimento (`prefers-reduced-motion`) e os indicadores são botões que levam direto ao slide. As imagens dos três slides ficam sobrepostas com transição de opacidade, para a troca não piscar; só a primeira é carregada com prioridade. No mobile a miniatura menor mostra a imagem do próximo slide. Os testes visuais emulam `prefers-reduced-motion` para capturar sempre o primeiro slide.
+
+### Seletor de ordenação com fundo
+
+![Seletor "Ordenar por" com fundo escuro atrás do valor](ux-improves/filter.png)
+
+No Figma o seletor "Ordenar por" é só texto e seta, sem fundo. Mantive um fundo `surface` atrás do valor porque ele evidencia que ali existe um controle interativo e separa o valor atual do rótulo. É uma escolha deliberada, não um descuido de fidelidade.
 
 ### Cards do catálogo: altura da moldura e respiro da imagem
 
@@ -211,6 +212,14 @@ O Figma usa três grades diferentes nos três blocos do rodapé (colunas de 264 
 ![Selo de carteiras com padding igual nos dois lados](ux-improves/wallets-info-alignment.png)
 
 No Figma o selo tem 8 px de padding à esquerda e nenhum à direita (frame `Supported wallet brands`, padding `8 0 8 8`), com o texto encostando na borda. Mantive 10 px dos dois lados.
+
+### Ajustes para aderir ao Figma
+
+- Lupa da galeria a 13 px do topo e 12 px da direita da moldura, como no frame `Main Image`; eu estava usando 16 px nos dois eixos.
+- O botão de fechar da imagem ampliada ficava invisível sobre artes claras. Passou a usar o mesmo círculo escuro com borda da lupa.
+- Os ícones de redes sociais são SVGs exportados com a caixa de 30 px e a borda inclusas; renderizados a 16 px, o glifo ficava com 8 px. Agora o SVG ocupa os 30 px e a borda vem dele, como no Figma.
+- O selo "RARO" nos cards foi removido: não existe no Figma.
+- O link "Simulação" do rodapé foi removido; o painel abre pelo atalho `Ctrl+.`.
 
 ### Botões de quantidade
 

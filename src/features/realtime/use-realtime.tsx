@@ -89,6 +89,18 @@ export function useRealtime() {
             }
           }
 
+          if (!name) {
+            for (const query of queryClient.getQueryCache().findAll({ queryKey: ['quote'] })) {
+              const data = query.state.data as
+                { lines?: { nftId: string; name: string }[] } | undefined
+              const match = data?.lines?.find((line) => line.nftId === event.nftId)
+              if (match) {
+                name = match.name
+                break
+              }
+            }
+          }
+
           void queryClient.invalidateQueries({ queryKey: ['cart'] })
           void queryClient.invalidateQueries({ queryKey: ['quote'] })
 

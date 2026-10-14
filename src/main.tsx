@@ -1,9 +1,10 @@
 import './app.css'
 import { renderApp } from './app'
+import { env } from '@/lib/env'
 import { markMocksReady } from '@/lib/mocks-ready'
 
 async function enableMocking() {
-  if (import.meta.env.VITE_API_MOCKING !== 'true') return
+  if (!env.apiMocking) return
   const { startMocks } = await import('./mocks/browser')
   await startMocks()
 }

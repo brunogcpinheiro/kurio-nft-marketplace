@@ -12,6 +12,7 @@ async function settleImages(page: Page) {
 
 test.describe('visual regression', () => {
   test.beforeEach(async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
     await page.clock.setFixedTime(new Date('2026-10-14T12:00:00Z'))
   })
 
