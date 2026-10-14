@@ -2,7 +2,7 @@
 
 Implementação do desafio de frontend: um marketplace de NFTs com descoberta, compra e conta do colecionador, em React e TypeScript, seguindo o layout do Figma. A API, a autenticação, as carteiras e o pagamento são simulados com MSW diretamente no browser, inclusive no deploy, então tudo funciona a partir de um checkout limpo e sem backend.
 
-Deploy: `https://kurio-nft-marketplace.vercel.app` (atualizo este link quando publicar).
+Deploy: https://kurio-nft-marketplace.vercel.app
 
 As decisões de arquitetura, os contratos REST e de eventos, a política de cache e os desvios em relação ao Figma estão em [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
