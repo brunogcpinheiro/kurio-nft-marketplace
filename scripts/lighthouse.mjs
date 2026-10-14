@@ -1,5 +1,5 @@
 import { spawn } from 'node:child_process'
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import os from 'node:os'
 import { fileURLToPath } from 'node:url'
@@ -52,12 +52,25 @@ function fmt(value, unit) {
   return value.toFixed(3)
 }
 
+function chromeBinary() {
+  const full = chromium.executablePath()
+  if (existsSync(full)) return { path: full, flags: ['--headless=new'] }
+  const shell = full
+    .replace('chromium-', 'chromium_headless_shell-')
+    .replace('chrome-linux64/chrome', 'chrome-headless-shell-linux64/chrome-headless-shell')
+  if (existsSync(shell)) return { path: shell, flags: [] }
+  throw new Error(
+    'Chromium do Playwright não encontrado; rode pnpm exec playwright install chromium',
+  )
+}
+
 async function launchChrome(dir) {
   const port = 9222 + Math.floor(Math.random() * 500)
+  const binary = chromeBinary()
   const child = spawn(
-    chromium.executablePath(),
+    binary.path,
     [
-      '--headless=new',
+      ...binary.flags,
       `--remote-debugging-port=${port}`,
       `--user-data-dir=${dir}`,
       '--no-sandbox',
@@ -139,7 +152,12 @@ try {
   }
 } finally {
   chrome.kill()
-  rmSync(userDataDir, { recursive: true, force: true })
+  await new Promise((r) => setTimeout(r, 1000))
+  try {
+    rmSync(userDataDir, { recursive: true, force: true })
+  } catch {
+    process.stderr.write(`não foi possível remover ${userDataDir}\n`)
+  }
   if (preview) process.kill(-preview.pid)
 }
 

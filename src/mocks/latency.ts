@@ -13,5 +13,5 @@ export async function networkDelay(key: string) {
     scenarioState.lastCatalogCallAt = now
     return delay(first ? 2500 : 200)
   }
-  return delay(between(150, 400))
+  return delay(between(100, 250))
 }

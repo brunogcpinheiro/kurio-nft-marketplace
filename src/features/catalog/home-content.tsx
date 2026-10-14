@@ -38,9 +38,12 @@ export function HomeContent({ search, update, reset }: Props) {
 
         <section
           id="catalogo"
-          aria-label="Catálogo"
+          aria-labelledby="catalogo-title"
           className="mt-4 grid scroll-mt-6 gap-12 md:mt-24 xl:grid-cols-[310px_1fr]"
         >
+          <h2 id="catalogo-title" className="sr-only">
+            Catálogo
+          </h2>
           <aside className="hidden flex-col gap-6 xl:flex">
             <FiltersPanel facets={catalog.data?.facets} search={search} onChange={update} />
             <FeaturedBanner nft={content.data?.featured} />

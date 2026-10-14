@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { type ComponentType, useState } from 'react'
+import { Suspense, lazy, type ComponentType, useState } from 'react'
 import {
   SocialFacebookIcon,
   SocialInstagramIcon,
@@ -11,7 +11,10 @@ import {
 import { OutOfScopeLink } from '@/components/out-of-scope-link'
 import { PageContainer } from '@/components/layout/page-container'
 import { notifyOutOfScope } from '@/lib/out-of-scope'
-import { SimulationPanel } from '@/features/simulation/panel'
+
+const SimulationPanel = lazy(() =>
+  import('@/features/simulation/panel').then((m) => ({ default: m.SimulationPanel })),
+)
 
 const highlights = [
   {
@@ -201,7 +204,9 @@ export function Footer() {
           <p className="text-fg text-center text-sm leading-[30px]">
             © 2026 Kurio. Propriedade digital para todos.
           </p>
-          <SimulationPanel />
+          <Suspense fallback={null}>
+            <SimulationPanel />
+          </Suspense>
         </div>
       </PageContainer>
     </footer>

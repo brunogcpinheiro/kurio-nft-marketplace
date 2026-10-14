@@ -2,7 +2,7 @@ export const scenarioList = [
   {
     name: 'default',
     title: 'Padrão',
-    description: 'Latência curta, tudo funciona e o pedido confirma em 3 segundos.',
+    description: 'Latência de 100 a 250 ms, tudo funciona e o pedido confirma em 3 segundos.',
   },
   {
     name: 'slow-network',

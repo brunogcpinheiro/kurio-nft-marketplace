@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { session } from '@/features/auth/session'
 import { guestCart } from '@/features/cart/use-guest-cart'
+import { mocksReady } from '@/lib/mocks-ready'
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -14,7 +15,8 @@ export function onUnauthenticated(handler: () => void) {
   unauthenticatedHandler = handler
 }
 
-api.interceptors.request.use((config) => {
+api.interceptors.request.use(async (config) => {
+  await mocksReady
   const current = session.get()
   if (current) config.headers.Authorization = `Bearer ${current.token}`
   const guest = guestCart.get()

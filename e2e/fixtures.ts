@@ -164,15 +164,20 @@ export async function search(page: Page, term: string) {
 }
 
 export async function openFilters(page: Page) {
+  const dialog = page.getByRole('dialog', { name: 'Filtros' })
+  if (await dialog.isVisible()) return
   const trigger = page.getByRole('button', { name: /^Filtros/ })
-  if (await trigger.isVisible()) await trigger.click()
+  if (await trigger.isVisible()) {
+    await trigger.click()
+    await expect(dialog).toBeVisible()
+  }
 }
 
 export async function closeFilters(page: Page) {
-  const close = page
-    .getByRole('dialog', { name: 'Filtros' })
-    .getByRole('button', { name: 'Fechar' })
-  if (await close.isVisible()) await close.click()
+  const dialog = page.getByRole('dialog', { name: 'Filtros' })
+  if (!(await dialog.isVisible())) return
+  await page.keyboard.press('Escape')
+  await expect(dialog).toBeHidden()
 }
 
 export function cards(page: Page) {

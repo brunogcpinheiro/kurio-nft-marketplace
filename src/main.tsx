@@ -1,4 +1,6 @@
 import './app.css'
+import { renderApp } from './app'
+import { markMocksReady } from '@/lib/mocks-ready'
 
 async function enableMocking() {
   if (import.meta.env.VITE_API_MOCKING !== 'true') return
@@ -6,6 +8,5 @@ async function enableMocking() {
   await startMocks()
 }
 
-enableMocking()
-  .then(() => import('./app'))
-  .then(({ renderApp }) => renderApp())
+void enableMocking().finally(markMocksReady)
+renderApp()

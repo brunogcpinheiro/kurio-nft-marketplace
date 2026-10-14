@@ -14,7 +14,10 @@ export function Promos({ promos }: { promos?: HomeContent['promos'] }) {
     )
   }
   return (
-    <section aria-label="Promoções" className="grid gap-7 md:grid-cols-2">
+    <section aria-labelledby="promos-title" className="grid gap-7 md:grid-cols-2">
+      <h2 id="promos-title" className="sr-only">
+        Promoções
+      </h2>
       {promos.map((promo) => (
         <article
           key={promo.id}

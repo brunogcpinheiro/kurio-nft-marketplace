@@ -37,10 +37,9 @@ test.describe('catálogo', () => {
       await expect(page).toHaveURL(/sort=price-asc/)
       await expect
         .poll(async () => {
-          const labels = await cards(page)
-            .locator('span[aria-label$="ETH"]')
-            .evaluateAll((els) => els.map((el) => el.getAttribute('aria-label') ?? ''))
-          const numbers = labels.map((label) => Number(label.split(' ')[0]))
+          const numbers = await cards(page)
+            .locator('[data-price]')
+            .evaluateAll((els) => els.map((el) => Number(el.getAttribute('data-price'))))
           return (
             numbers.length > 1 && numbers.every((n, i) => i === 0 || n >= (numbers[i - 1] ?? 0))
           )

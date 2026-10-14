@@ -4,39 +4,60 @@ import { ArrowRightIcon } from '@/components/icons'
 import { NftImage } from '@/components/nft-image'
 import { Skeleton } from '@/components/ui/skeleton'
 
+const heroImage = 'emerald'
+
 export function Hero({ content }: { content?: HomeContent['hero'] }) {
-  if (!content) return <HeroSkeleton />
+  const imageKey = content?.imageKey ?? heroImage
   return (
-    <section aria-labelledby="hero-title" className="mt-4 md:mt-8">
+    <section aria-labelledby="hero-title" aria-busy={!content} className="mt-4 md:mt-8">
       <div className="hidden h-[450px] grid-cols-[1fr_450px] gap-[110px] pl-10 md:grid">
         <div className="flex flex-col justify-between py-[43px]">
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-2">
-              <p className="text-fg text-sm font-medium tracking-[1.4px]">{content.eyebrow}</p>
-              <h1
-                id="hero-title"
-                className="text-fg text-[43px] leading-[70px] font-bold whitespace-pre-line uppercase"
-              >
-                {content.title}
-              </h1>
+              {content ? (
+                <p className="text-fg text-sm font-medium tracking-[1.4px]">{content.eyebrow}</p>
+              ) : (
+                <Skeleton className="h-4 w-40" />
+              )}
+              {content ? (
+                <h1
+                  id="hero-title"
+                  className="text-fg text-[43px] leading-[70px] font-bold whitespace-pre-line uppercase"
+                >
+                  {content.title}
+                </h1>
+              ) : (
+                <h1 id="hero-title" className="sr-only">
+                  Kurio
+                </h1>
+              )}
+              {content ? null : <Skeleton className="h-[140px] w-full" />}
             </div>
-            <p className="text-fg-muted max-w-[557px] text-sm leading-6">{content.description}</p>
-            <Link
-              to="/"
-              hash="catalogo"
-              className="bg-brand-strong text-bg flex h-10 w-[140px] items-center justify-center rounded-md text-base font-bold uppercase"
-            >
-              {content.cta}
-            </Link>
+            {content ? (
+              <p className="text-fg-muted max-w-[557px] text-sm leading-6">{content.description}</p>
+            ) : (
+              <Skeleton className="h-12 w-[557px] max-w-full" />
+            )}
+            {content ? (
+              <Link
+                to="/"
+                hash="catalogo"
+                className="bg-brand-strong text-bg flex h-10 w-[140px] items-center justify-center rounded-md text-base font-bold uppercase"
+              >
+                {content.cta}
+              </Link>
+            ) : (
+              <Skeleton className="h-10 w-[140px]" />
+            )}
           </div>
-          <div className="flex justify-end gap-2 pr-0" aria-hidden="true">
+          <div className="flex justify-end gap-2" aria-hidden="true">
             <span className="bg-brand-strong size-2 rounded-full" />
             <span className="bg-brand-strong size-2 rounded-full" />
             <span className="bg-brand-strong size-2 rounded-full" />
           </div>
         </div>
         <NftImage
-          imageKey={content.imageKey}
+          imageKey={imageKey}
           name="destaque Kurio"
           base={900}
           priority
@@ -58,25 +79,37 @@ export function Hero({ content }: { content?: HomeContent['hero'] }) {
         />
         <div className="relative flex h-full gap-2">
           <div className="flex w-[188px] flex-col justify-between">
-            <div className="flex flex-col gap-1.5">
-              <p className="text-fg text-xs font-medium">{content.eyebrow}</p>
-              <h1 className="text-fg text-lg leading-[29px] font-bold whitespace-pre-line uppercase">
-                {content.mobileTitle}
-              </h1>
-              <p className="text-fg-muted text-xs leading-[18px]">{content.mobileDescription}</p>
-            </div>
-            <Link
-              to="/"
-              hash="catalogo"
-              className="text-brand flex items-center gap-2 text-xs font-bold uppercase"
-            >
-              {content.cta}
-              <ArrowRightIcon className="text-brand-strong size-4" />
-            </Link>
+            {content ? (
+              <div className="flex flex-col gap-1.5">
+                <p className="text-fg text-xs font-medium">{content.eyebrow}</p>
+                <h1 className="text-fg text-lg leading-[29px] font-bold whitespace-pre-line uppercase">
+                  {content.mobileTitle}
+                </h1>
+                <p className="text-fg-muted text-xs leading-[18px]">{content.mobileDescription}</p>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-3 w-24" />
+                <Skeleton className="h-14 w-full" />
+                <Skeleton className="h-9 w-full" />
+              </div>
+            )}
+            {content ? (
+              <Link
+                to="/"
+                hash="catalogo"
+                className="text-brand flex items-center gap-2 text-xs font-bold uppercase"
+              >
+                {content.cta}
+                <ArrowRightIcon className="text-brand-strong size-4" />
+              </Link>
+            ) : (
+              <Skeleton className="h-3 w-20" />
+            )}
           </div>
           <div className="relative ml-auto w-[138px]">
             <NftImage
-              imageKey={content.imageKey}
+              imageKey={imageKey}
               name="destaque Kurio"
               base={320}
               priority
@@ -105,23 +138,6 @@ export function Hero({ content }: { content?: HomeContent['hero'] }) {
           <span className="bg-brand-strong size-[7px] rounded-full" />
         </div>
       </div>
-    </section>
-  )
-}
-
-function HeroSkeleton() {
-  return (
-    <section className="mt-4 md:mt-8" aria-busy="true" aria-label="Carregando destaque">
-      <div className="hidden h-[450px] grid-cols-[1fr_450px] gap-[110px] pl-10 md:grid">
-        <div className="flex flex-col gap-8 py-[43px]">
-          <Skeleton className="h-4 w-40" />
-          <Skeleton className="h-[140px] w-full" />
-          <Skeleton className="h-12 w-[557px] max-w-full" />
-          <Skeleton className="h-10 w-[140px]" />
-        </div>
-        <Skeleton className="size-[450px] rounded-3xl" />
-      </div>
-      <Skeleton className="h-[190px] rounded-xl md:hidden" />
     </section>
   )
 }

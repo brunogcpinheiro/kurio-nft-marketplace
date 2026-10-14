@@ -1,6 +1,7 @@
 import { io, type Socket } from 'socket.io-client'
 import { session } from '@/features/auth/session'
 import { guestCart } from '@/features/cart/use-guest-cart'
+import { mocksReady } from '@/lib/mocks-ready'
 
 let socket: Socket | null = null
 
@@ -23,7 +24,9 @@ export function getSocket(): Socket {
 }
 
 export function connectSocket() {
-  const current = getSocket()
-  if (current.connected) current.disconnect()
-  current.connect()
+  void mocksReady.then(() => {
+    const current = getSocket()
+    if (current.connected) current.disconnect()
+    current.connect()
+  })
 }

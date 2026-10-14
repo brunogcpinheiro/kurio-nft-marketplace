@@ -64,11 +64,16 @@ export function RelatedNfts({ slug, title }: Props) {
                   behavior: 'smooth',
                 })
               }
-              className={cn(
-                'border-brand-strong size-3 rounded-full border',
-                page === i && 'bg-brand-strong',
-              )}
-            />
+              className="flex size-6 items-center justify-center"
+            >
+              <span
+                aria-hidden="true"
+                className={cn(
+                  'border-brand-strong block size-3 rounded-full border',
+                  page === i && 'bg-brand-strong',
+                )}
+              />
+            </button>
           ))}
         </div>
       ) : null}
@@ -79,12 +84,7 @@ export function RelatedNfts({ slug, title }: Props) {
 function RelatedCard({ nft }: { nft: NftSummary }) {
   return (
     <li className="w-[160px] shrink-0 snap-start md:w-[219px]">
-      <Link
-        to="/nft/$slug"
-        params={{ slug: nft.slug }}
-        className="flex flex-col gap-3"
-        aria-label={`${nft.name}, ${nft.price} ETH`}
-      >
+      <Link to="/nft/$slug" params={{ slug: nft.slug }} className="flex flex-col gap-3">
         <div className="bg-bg-elevated h-[200px] px-3 py-1 md:h-[255px] md:py-1 md:pr-3 md:pl-5">
           <NftImage
             imageKey={nft.imageKey}

@@ -8,14 +8,12 @@ type Props = {
 }
 
 export function Price({ value, previous, className, previousClassName }: Props) {
-  const label = previous ? `${value} ETH, antes ${previous} ETH` : `${value} ETH`
   return (
-    <span className={cn('inline-flex items-baseline gap-3', className)} aria-label={label}>
-      <span className="text-brand font-bold" aria-hidden="true">
-        {value} ETH
-      </span>
+    <span className={cn('inline-flex items-baseline gap-3', className)} data-price={value}>
+      <span className="text-brand font-bold">{value} ETH</span>
       {previous ? (
-        <s className={cn('text-fg-subtle font-normal', previousClassName)} aria-hidden="true">
+        <s className={cn('text-fg-subtle font-normal', previousClassName)}>
+          <span className="sr-only">antes </span>
           {previous} ETH
         </s>
       ) : null}
