@@ -1,0 +1,11 @@
+node_modules
+dist
+*.local
+*.log
+.DS_Store
+.vscode
+.idea
+playwright-report
+test-results
+lighthouse/reports
+.playwright-mcp
